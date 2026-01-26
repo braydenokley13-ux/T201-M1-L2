@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA GM Crisis Manager</title>
+    <link rel="stylesheet" href="styles/game.css">
+</head>
+<body>
+    <!-- Team Selection Screen -->
+    <div id="team-selection-screen" class="screen active">
+        <div class="header">
+            <h1>NBA GM CRISIS MANAGER</h1>
+            <p class="subtitle">Choose Your Challenge</p>
+        </div>
+ 
+        <div class="team-grid">
+            <div class="team-card" data-team="bucks">
+                <div class="team-emoji">🦌</div>
+                <div class="team-name">MILWAUKEE BUCKS</div>
+                <div class="team-scenario">Injury Crisis & Reset</div>
+                <div class="team-difficulty">
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star">★</span>
+                </div>
+                <div class="team-situation">Lillard out, Middleton traded. Save Giannis's season.</div>
+                <button class="play-btn">PLAY</button>
+            </div>
+ 
+            <div class="team-card" data-team="cavaliers">
+                <div class="team-emoji">🏆</div>
+                <div class="team-name">CLEVELAND CAVALIERS</div>
+                <div class="team-scenario">Second Apron Hell</div>
+                <div class="team-difficulty">
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                </div>
+                <div class="team-situation">$163M tax bill. Only second apron team in NBA.</div>
+                <button class="play-btn">PLAY</button>
+            </div>
+ 
+            <div class="team-card" data-team="warriors">
+                <div class="team-emoji">🌉</div>
+                <div class="team-name">GOLDEN STATE WARRIORS</div>
+                <div class="team-scenario">Dynasty's Last Stand</div>
+                <div class="team-difficulty">
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                </div>
+                <div class="team-situation">Steph at 37. One more championship run.</div>
+                <button class="play-btn">PLAY</button>
+            </div>
+ 
+            <div class="team-card" data-team="thunder">
+                <div class="team-emoji">⚡</div>
+                <div class="team-name">OKLAHOMA CITY THUNDER</div>
+                <div class="team-scenario">Defend The Crown</div>
+                <div class="team-difficulty">
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                </div>
+                <div class="team-situation">Defending champs. SGA is MVP. Repeat or fail.</div>
+                <button class="play-btn">PLAY</button>
+            </div>
+ 
+            <div class="team-card" data-team="spurs">
+                <div class="team-emoji">👽</div>
+                <div class="team-name">SAN ANTONIO SPURS</div>
+                <div class="team-scenario">Young Gun Playoff Push</div>
+                <div class="team-difficulty">
+                    <span class="star filled">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                </div>
+                <div class="team-situation">Wemby leads playoff push. First postseason in 7 years.</div>
+                <button class="play-btn">PLAY</button>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Main Game Screen -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <button id="back-btn" class="back-btn">← Back</button>
+            <div class="team-header-info">
+                <span id="current-team-emoji" class="header-emoji">🦌</span>
+                <span id="current-team-name">MILWAUKEE BUCKS</span>
+            </div>
+            <div class="scenario-name" id="scenario-name">Injury Crisis & Reset</div>
+        </div>
+ 
+        <div class="game-content">
+            <!-- Dashboard Panel -->
+            <div class="dashboard-panel">
+                <div class="panel-header">
+                    <h2>📊 OWNERSHIP DEMANDS</h2>
+                </div>
+ 
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">💰 Total Spend</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" id="payroll-bar"></div>
+                        </div>
+                        <div class="stat-values">
+                            <span id="current-payroll">$190M</span>
+                            <span>/</span>
+                            <span id="max-spend">$250M Max</span>
+                        </div>
+                    </div>
+ 
+                    <div class="stat-card">
+                        <div class="stat-label">🏆 Projected Wins</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill wins" id="wins-bar"></div>
+                        </div>
+                        <div class="stat-values">
+                            <span id="current-wins">34</span>
+                            <span>/</span>
+                            <span id="target-wins">44 Target</span>
+                        </div>
+                    </div>
+ 
+                    <div class="stat-card">
+                        <div class="stat-label">🏀 Playoff Wins</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill playoff" id="playoff-bar"></div>
+                        </div>
+                        <div class="stat-values">
+                            <span id="current-playoff-wins">0</span>
+                            <span>projected</span>
+                        </div>
+                    </div>
+ 
+                    <div class="stat-card">
+                        <div class="stat-label">📈 Performance Points</div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill perf" id="perf-bar"></div>
+                        </div>
+                        <div class="stat-values">
+                            <span id="current-perf">34</span>
+                            <span>/</span>
+                            <span id="target-perf">47 Target</span>
+                        </div>
+                    </div>
+ 
+                    <div class="stat-card tax-card">
+                        <div class="stat-label">⚠️ Luxury Tax</div>
+                        <div class="tax-info">
+                            <span id="tax-amount">$0</span>
+                            <span id="repeater-status" class="repeater-badge hidden">REPEATER</span>
+                        </div>
+                    </div>
+                </div>
+ 
+                <div class="challenge-box" id="challenge-box">
+                    <div class="challenge-label">THE CHALLENGE:</div>
+                    <div class="challenge-text" id="challenge-text">
+                        "Giannis is frustrated. Make the playoffs or he demands a trade."
+                    </div>
+                </div>
+ 
+                <div class="current-roster">
+                    <h3>Current Roster</h3>
+                    <div class="roster-list" id="roster-list"></div>
+                </div>
+            </div>
+ 
+            <!-- Moves Panel -->
+            <div class="moves-panel">
+                <div class="panel-header">
+                    <h2>YOUR ROSTER MOVES</h2>
+                    <span class="move-count">(<span id="selected-count">0</span>/5 Selected)</span>
+                </div>
+ 
+                <div class="move-tabs">
+                    <button class="tab-btn active" data-category="trades">Trades (12)</button>
+                    <button class="tab-btn" data-category="free-agency">Free Agency (5)</button>
+                    <button class="tab-btn" data-category="extensions">Extensions (3)</button>
+                    <button class="tab-btn" data-category="development">Development (4)</button>
+                    <button class="tab-btn" data-category="savings">Savings (6)</button>
+                    <button class="tab-btn" data-category="status-quo">Status Quo (4)</button>
+                </div>
+ 
+                <div class="moves-container" id="moves-container">
+                    <!-- Moves will be populated by JavaScript -->
+                </div>
+ 
+                <div class="selected-moves-panel">
+                    <h3>Selected Moves</h3>
+                    <div class="selected-moves-list" id="selected-moves-list">
+                        <p class="no-moves">No moves selected yet</p>
+                    </div>
+                </div>
+ 
+                <button class="simulate-btn" id="simulate-btn">
+                    LOCK IN & SIMULATE SEASON →
+                </button>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Results Screen -->
+    <div id="results-screen" class="screen">
+        <div class="results-container">
+            <div class="results-header">
+                <h1>📰 SEASON RESULTS 📰</h1>
+            </div>
+ 
+            <div class="results-headline" id="results-headline">
+                "BUCKS GM SAVES SEASON, MAKES PLAYOFFS!"
+            </div>
+            <div class="results-source" id="results-source">Milwaukee Journal Sentinel</div>
+ 
+            <div class="results-stats">
+                <div class="result-stat" id="result-wins">
+                    <span class="result-label">Final Record:</span>
+                    <span class="result-value">45-37</span>
+                    <span class="result-status success">✓ HIT TARGET</span>
+                </div>
+                <div class="result-stat" id="result-payroll">
+                    <span class="result-label">Total Spend:</span>
+                    <span class="result-value">$243M</span>
+                    <span class="result-status success">✓ UNDER MAX</span>
+                </div>
+                <div class="result-stat" id="result-perf">
+                    <span class="result-label">Performance Points:</span>
+                    <span class="result-value">48 / 47</span>
+                    <span class="result-status success">✓ HIT TARGET</span>
+                </div>
+                <div class="result-stat" id="result-playoff">
+                    <span class="result-label">Playoff Result:</span>
+                    <span class="result-value">First Round</span>
+                </div>
+                <div class="result-stat" id="result-tax">
+                    <span class="result-label">Luxury Tax Bill:</span>
+                    <span class="result-value">$45M</span>
+                </div>
+            </div>
+ 
+            <div class="owner-statement" id="owner-statement">
+                <div class="statement-label">STAR PLAYER STATEMENT:</div>
+                <div class="statement-text" id="statement-text">
+                    "This GM made the right moves. I'm staying."
+                </div>
+            </div>
+ 
+            <div class="star-rating" id="star-rating">
+                <span class="result-star">★</span>
+                <span class="result-star">★</span>
+                <span class="result-star">★</span>
+                <span class="result-star">★</span>
+                <span class="result-star empty">★</span>
+            </div>
+            <div class="rating-label" id="rating-label">SUCCESS!</div>
+ 
+            <div class="moves-summary">
+                <h3>YOUR MOVES:</h3>
+                <ul class="moves-summary-list" id="moves-summary-list">
+                    <li>Traded for Jimmy Butler (Star Acquisition)</li>
+                    <li>Signed Gary Harris on MLE (Full MLE)</li>
+                </ul>
+            </div>
+ 
+            <div class="efficiency-score">
+                <span class="efficiency-label">EFFICIENCY SCORE:</span>
+                <span class="efficiency-value" id="efficiency-score">87</span>
+                <span class="efficiency-max">/ 100</span>
+            </div>
+ 
+            <div class="claim-code-section" id="claim-code-section">
+                <div class="claim-code-label">🎉 CLAIM CODE UNLOCKED 🎉</div>
+                <div class="claim-code" id="claim-code">L2-201-M1-GMN</div>
+                <div class="claim-code-note">(Save this for your assignment submission)</div>
+            </div>
+ 
+            <div class="no-claim-code" id="no-claim-code-section" style="display: none;">
+                <div class="no-claim-label">❌ NO CLAIM CODE - TRY AGAIN</div>
+                <div class="no-claim-note">(You must hit ALL targets to earn claim code)</div>
+            </div>
+ 
+            <div class="results-buttons">
+                <button class="result-btn" id="try-again-btn">TRY AGAIN</button>
+                <button class="result-btn primary" id="try-another-btn">TRY ANOTHER TEAM</button>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+ 
+    <!-- Scripts -->
+    <script src="scripts/teams.js"></script>
+    <script src="scripts/moves.js"></script>
+    <script src="scripts/calculator.js"></script>
+    <script src="scripts/ui.js"></script>
+    <script src="scripts/game-engine.js"></script>
+</body>
+</html>
