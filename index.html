@@ -1,221 +1,138 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NBA GM Crisis Manager</title>
-    <link rel="stylesheet" href="styles/game.css">
-</head>
-<body>
-    <!-- Team Selection Screen -->
-    <div id="team-selection-screen" class="screen active">
-        <div class="header">
-            <h1>NBA GM CRISIS MANAGER</h1>
-            <p class="subtitle">Choose Your Challenge</p>
-        </div>
- 
-        <div class="team-grid">
-            <div class="team-card" data-team="bucks">
-                <div class="team-emoji">🦌</div>
-                <div class="team-name">MILWAUKEE BUCKS</div>
-                <div class="team-scenario">Injury Crisis & Reset</div>
-                <div class="team-difficulty">
-                    <span class="star filled">★</span>
-                    <span class="star filled">★</span>
-                    <span class="star">★</span>
-                </div>
-                <div class="team-situation">Lillard out, Middleton traded. Save Giannis's season.</div>
-                <button class="play-btn">PLAY</button>
-            </div>
- 
-            <div class="team-card" data-team="cavaliers">
-                <div class="team-emoji">🏆</div>
-                <div class="team-name">CLEVELAND CAVALIERS</div>
-                <div class="team-scenario">Second Apron Hell</div>
-                <div class="team-difficulty">
-                    <span class="star filled">★</span>
-                    <span class="star filled">★</span>
-                    <span class="star filled">★</span>
-                </div>
-                <div class="team-situation">$163M tax bill. Only second apron team in NBA.</div>
-                <button class="play-btn">PLAY</button>
-            </div>
- 
-            <div class="team-card" data-team="warriors">
-                <div class="team-emoji">🌉</div>
-                <div class="team-name">GOLDEN STATE WARRIORS</div>
-                <div class="team-scenario">Dynasty's Last Stand</div>
-                <div class="team-difficulty">
-                    <span class="star filled">★</span>
-                    <span class="star filled">★</span>
-                    <span class="star filled">★</span>
-                </div>
-                <div class="team-situation">Steph at 37. One more championship run.</div>
-                <button class="play-btn">PLAY</button>
-            </div>
- 
-            <div class="team-card" data-team="thunder">
-                <div class="team-emoji">⚡</div>
-                <div class="team-name">OKLAHOMA CITY THUNDER</div>
-                <div class="team-scenario">Defend The Crown</div>
-                <div class="team-difficulty">
-                    <span class="star filled">★</span>
-                    <span class="star filled">★</span>
-                    <span class="star filled">★</span>
-                </div>
-                <div class="team-situation">Defending champs. SGA is MVP. Repeat or fail.</div>
-                <button class="play-btn">PLAY</button>
-            </div>
- 
-            <div class="team-card" data-team="spurs">
-                <div class="team-emoji">👽</div>
-                <div class="team-name">SAN ANTONIO SPURS</div>
-                <div class="team-scenario">Young Gun Playoff Push</div>
-                <div class="team-difficulty">
-                    <span class="star filled">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                </div>
-                <div class="team-situation">Wemby leads playoff push. First postseason in 7 years.</div>
-                <button class="play-btn">PLAY</button>
-            </div>
-        </div>
-    </div>
- 
-    <!-- Main Game Screen -->
-    <div id="game-screen" class="screen">
-        <div class="game-header">
-            <button id="back-btn" class="back-btn">← Back</button>
-            <div class="team-header-info">
-                <span id="current-team-emoji" class="header-emoji">🦌</span>
-                <span id="current-team-name">MILWAUKEE BUCKS</span>
-            </div>
-            <div class="scenario-name" id="scenario-name">Injury Crisis & Reset</div>
-        </div>
- 
-        <div class="game-content">
-            <!-- Dashboard Panel -->
-            <div class="dashboard-panel">
-                <div class="panel-header">
-                    <h2>📊 OWNERSHIP DEMANDS</h2>
-                </div>
- 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label">💰 Total Spend</div>
-                        <div class="stat-bar">
-                            <div class="stat-bar-fill" id="payroll-bar"></div>
-                        </div>
-                        <div class="stat-values">
-                            <span id="current-payroll">$190M</span>
-                            <span>/</span>
-                            <span id="max-spend">$250M Max</span>
-                        </div>
-                    </div>
- 
-                    <div class="stat-card">
-                        <div class="stat-label">🏆 Projected Wins</div>
-                        <div class="stat-bar">
-                            <div class="stat-bar-fill wins" id="wins-bar"></div>
-                        </div>
-                        <div class="stat-values">
-                            <span id="current-wins">34</span>
-                            <span>/</span>
-                            <span id="target-wins">44 Target</span>
-                        </div>
-                    </div>
- 
-                    <div class="stat-card">
-                        <div class="stat-label">🏀 Playoff Wins</div>
-                        <div class="stat-bar">
-                            <div class="stat-bar-fill playoff" id="playoff-bar"></div>
-                        </div>
-                        <div class="stat-values">
-                            <span id="current-playoff-wins">0</span>
-                            <span>projected</span>
-                        </div>
-                    </div>
- 
-                    <div class="stat-card">
-                        <div class="stat-label">📈 Performance Points</div>
-                        <div class="stat-bar">
-                            <div class="stat-bar-fill perf" id="perf-bar"></div>
-                        </div>
-                        <div class="stat-values">
-                            <span id="current-perf">34</span>
-                            <span>/</span>
-                            <span id="target-perf">47 Target</span>
-                        </div>
-                    </div>
- 
-                    <div class="stat-card tax-card">
-                        <div class="stat-label">⚠️ Luxury Tax</div>
-                        <div class="tax-info">
-                            <span id="tax-amount">$0</span>
-                            <span id="repeater-status" class="repeater-badge hidden">REPEATER</span>
-                        </div>
-                    </div>
-                </div>
- 
-                <div class="challenge-box" id="challenge-box">
-                    <div class="challenge-label">THE CHALLENGE:</div>
-                    <div class="challenge-text" id="challenge-text">
-                        "Giannis is frustrated. Make the playoffs or he demands a trade."
-                    </div>
-                </div>
- 
-                <div class="current-roster">
-                    <h3>Current Roster</h3>
-                    <div class="roster-list" id="roster-list"></div>
-                </div>
-            </div>
- 
-            <!-- Moves Panel -->
-            <div class="moves-panel">
-                <div class="panel-header">
-                    <h2>YOUR ROSTER MOVES</h2>
-                    <span class="move-count">(<span id="selected-count">0</span>/5 Selected)</span>
-                </div>
- 
-                <div class="move-tabs">
-                    <button class="tab-btn active" data-category="trades">Trades (12)</button>
-                    <button class="tab-btn" data-category="free-agency">Free Agency (5)</button>
-                    <button class="tab-btn" data-category="extensions">Extensions (3)</button>
-                    <button class="tab-btn" data-category="development">Development (4)</button>
-                    <button class="tab-btn" data-category="savings">Savings (6)</button>
-                    <button class="tab-btn" data-category="status-quo">Status Quo (4)</button>
-                </div>
- 
-                <div class="moves-container" id="moves-container">
-                    <!-- Moves will be populated by JavaScript -->
-                </div>
- 
-                <div class="selected-moves-panel">
-                    <h3>Selected Moves</h3>
-                    <div class="selected-moves-list" id="selected-moves-list">
-                        <p class="no-moves">No moves selected yet</p>
-                    </div>
-                </div>
- 
-                <button class="simulate-btn" id="simulate-btn">
-                    LOCK IN & SIMULATE SEASON →
-                </button>
-            </div>
-        </div>
-    </div>
-
-            </div>
-        </div>
-    </div>
- 
-    <!-- Confetti Canvas -->
-    <canvas id="confetti-canvas"></canvas>
- 
-    <!-- Scripts -->
-    <script src="scripts/teams.js"></script>
-    <script src="scripts/moves.js"></script>
-    <script src="scripts/calculator.js"></script>
-    <script src="scripts/ui.js"></script>
-    <script src="scripts/game-engine.js"></script>
-</body>
-</html>
+diff --git a/index.html b/index.html
+index 68b2a9ce3cd8698d60f8a5ef640409fac9264636..b0a42a6b988cf88890d7824f9ee5c9303843043b 100644
+--- a/index.html
++++ b/index.html
+@@ -1,36 +1,53 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>NBA GM Crisis Manager</title>
+     <link rel="stylesheet" href="styles/game.css">
+ </head>
+ <body>
++    <!-- Home Screen -->
++    <div id="home-screen" class="screen active">
++        <div class="header">
++            <h1>NBA GM CRISIS MANAGER</h1>
++            <p class="subtitle">Run a team without the chaos. Pick a path, make 5 moves, and see the season.</p>
++        </div>
++        <div class="home-panel">
++            <h2>How It Works</h2>
++            <ol class="home-steps">
++                <li>Choose a team challenge.</li>
++                <li>Pick up to 5 roster moves.</li>
++                <li>Simulate the season and review results.</li>
++            </ol>
++            <button class="primary-btn" id="start-btn">START</button>
++        </div>
++    </div>
++
+     <!-- Team Selection Screen -->
+-    <div id="team-selection-screen" class="screen active">
++    <div id="team-selection-screen" class="screen">
+         <div class="header">
+             <h1>NBA GM CRISIS MANAGER</h1>
+             <p class="subtitle">Choose Your Challenge</p>
+         </div>
+  
+         <div class="team-grid">
+             <div class="team-card" data-team="bucks">
+                 <div class="team-emoji">🦌</div>
+                 <div class="team-name">MILWAUKEE BUCKS</div>
+                 <div class="team-scenario">Injury Crisis & Reset</div>
+                 <div class="team-difficulty">
+                     <span class="star filled">★</span>
+                     <span class="star filled">★</span>
+                     <span class="star">★</span>
+                 </div>
+                 <div class="team-situation">Lillard out, Middleton traded. Save Giannis's season.</div>
+                 <button class="play-btn">PLAY</button>
+             </div>
+  
+             <div class="team-card" data-team="cavaliers">
+                 <div class="team-emoji">🏆</div>
+                 <div class="team-name">CLEVELAND CAVALIERS</div>
+                 <div class="team-scenario">Second Apron Hell</div>
+                 <div class="team-difficulty">
+                     <span class="star filled">★</span>
+@@ -59,50 +76,78 @@
+                 <div class="team-name">OKLAHOMA CITY THUNDER</div>
+                 <div class="team-scenario">Defend The Crown</div>
+                 <div class="team-difficulty">
+                     <span class="star filled">★</span>
+                     <span class="star filled">★</span>
+                     <span class="star filled">★</span>
+                 </div>
+                 <div class="team-situation">Defending champs. SGA is MVP. Repeat or fail.</div>
+                 <button class="play-btn">PLAY</button>
+             </div>
+  
+             <div class="team-card" data-team="spurs">
+                 <div class="team-emoji">👽</div>
+                 <div class="team-name">SAN ANTONIO SPURS</div>
+                 <div class="team-scenario">Young Gun Playoff Push</div>
+                 <div class="team-difficulty">
+                     <span class="star filled">★</span>
+                     <span class="star">★</span>
+                     <span class="star">★</span>
+                 </div>
+                 <div class="team-situation">Wemby leads playoff push. First postseason in 7 years.</div>
+                 <button class="play-btn">PLAY</button>
+             </div>
+         </div>
+     </div>
++
++    <!-- Team Intro Screen -->
++    <div id="team-intro-screen" class="screen">
++        <div class="header">
++            <h1>YOUR GM DESK</h1>
++            <p class="subtitle">One team. One goal. Five moves.</p>
++        </div>
++        <div class="intro-panel">
++            <div class="intro-team">
++                <div class="intro-emoji" id="intro-team-emoji">🦌</div>
++                <div class="intro-name" id="intro-team-name">MILWAUKEE BUCKS</div>
++                <div class="intro-scenario" id="intro-team-scenario">Injury Crisis & Reset</div>
++            </div>
++            <div class="intro-details">
++                <p id="intro-team-description">
++                    Lillard out, Middleton traded. Save Giannis's season.
++                </p>
++                <div class="intro-challenge">
++                    <span class="label">Your Mission:</span>
++                    <span id="intro-team-challenge">Make the playoffs or Giannis demands a trade.</span>
++                </div>
++            </div>
++            <div class="intro-actions">
++                <button class="secondary-btn" id="change-team-btn">PICK ANOTHER TEAM</button>
++                <button class="primary-btn" id="enter-gm-btn">ENTER GM MODE</button>
++            </div>
++        </div>
++    </div>
+  
+     <!-- Main Game Screen -->
+     <div id="game-screen" class="screen">
+         <div class="game-header">
+             <button id="back-btn" class="back-btn">← Back</button>
+             <div class="team-header-info">
+                 <span id="current-team-emoji" class="header-emoji">🦌</span>
+                 <span id="current-team-name">MILWAUKEE BUCKS</span>
+             </div>
+             <div class="scenario-name" id="scenario-name">Injury Crisis & Reset</div>
+         </div>
+  
+         <div class="game-content">
+             <!-- Dashboard Panel -->
+             <div class="dashboard-panel">
+                 <div class="panel-header">
+                     <h2>📊 OWNERSHIP DEMANDS</h2>
+                 </div>
+  
+                 <div class="stats-grid">
+                     <div class="stat-card">
+                         <div class="stat-label">💰 Total Spend</div>
+                         <div class="stat-bar">
+                             <div class="stat-bar-fill" id="payroll-bar"></div>
+                         </div>
