@@ -11,13 +11,42 @@ const GameEngine = {
     init() {
         UI.init();
         this.bindEvents();
+        this.resetState();
+        UI.showScreen('home-screen');
     },
 
     bindEvents() {
+        UI.elements.startBtn.addEventListener('click', () => {
+            UI.showScreen('team-selection-screen');
+        });
+
+        UI.elements.enterGmBtn.addEventListener('click', () => {
+            if (!this.state.currentTeam) {
+                return;
+            }
+            this.renderCurrentState();
+            UI.showScreen('game-screen');
+        });
+
+        UI.elements.changeTeamBtn.addEventListener('click', () => {
+            UI.showScreen('team-selection-screen');
+        });
+
+        document.querySelectorAll('.play-btn').forEach((button) => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const card = event.target.closest('.team-card');
+                if (!card) {
+                    return;
+                }
+                this.selectTeam(card.dataset.team, { showIntro: true });
+            });
+        });
+
         document.querySelectorAll('.team-card').forEach((card) => {
             card.addEventListener('click', () => {
                 const teamId = card.dataset.team;
-                this.selectTeam(teamId);
+                this.selectTeam(teamId, { showIntro: true });
             });
         });
 
@@ -52,8 +81,7 @@ const GameEngine = {
         });
 
         UI.elements.backBtn.addEventListener('click', () => {
-            this.resetState();
-            UI.showScreen('team-selection-screen');
+            UI.showScreen('team-intro-screen');
         });
 
         UI.elements.simulateBtn.addEventListener('click', () => {
@@ -89,7 +117,7 @@ const GameEngine = {
         });
     },
 
-    selectTeam(teamId) {
+    selectTeam(teamId, options = { showIntro: false }) {
         this.state.currentTeam = TEAMS[teamId];
         this.state.selectedMoves = [];
         this.state.activeCategory = 'trades';
@@ -98,9 +126,14 @@ const GameEngine = {
         });
         UI.setTeamTheme(teamId);
         UI.updateTeamHeader(this.state.currentTeam);
+        UI.updateIntro(this.state.currentTeam);
         UI.renderRoster(this.state.currentTeam);
-        this.renderCurrentState();
-        UI.showScreen('game-screen');
+        if (options.showIntro) {
+            UI.showScreen('team-intro-screen');
+        } else {
+            this.renderCurrentState();
+            UI.showScreen('game-screen');
+        }
     },
 
     renderCurrentState() {
