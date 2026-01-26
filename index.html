@@ -1,8 +1,8 @@
 diff --git a/index.html b/index.html
-index 68b2a9ce3cd8698d60f8a5ef640409fac9264636..b0a42a6b988cf88890d7824f9ee5c9303843043b 100644
+index 68b2a9ce3cd8698d60f8a5ef640409fac9264636..bdcd11caa563cefafc73e1826a208d5e365ff6a3 100644
 --- a/index.html
 +++ b/index.html
-@@ -1,36 +1,53 @@
+@@ -1,39 +1,58 @@
  <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -12,29 +12,33 @@ index 68b2a9ce3cd8698d60f8a5ef640409fac9264636..b0a42a6b988cf88890d7824f9ee5c930
      <link rel="stylesheet" href="styles/game.css">
  </head>
  <body>
+-    <!-- Team Selection Screen -->
+-    <div id="team-selection-screen" class="screen active">
 +    <!-- Home Screen -->
 +    <div id="home-screen" class="screen active">
-+        <div class="header">
-+            <h1>NBA GM CRISIS MANAGER</h1>
-+            <p class="subtitle">Run a team without the chaos. Pick a path, make 5 moves, and see the season.</p>
+         <div class="header">
+             <h1>NBA GM CRISIS MANAGER</h1>
+-            <p class="subtitle">Choose Your Challenge</p>
++            <p class="subtitle">Be the GM. Make smart choices. See your season play out.</p>
 +        </div>
 +        <div class="home-panel">
 +            <h2>How It Works</h2>
++            <p class="subtitle">Fast, focused, and fun — no homework required.</p>
 +            <ol class="home-steps">
 +                <li>Choose a team challenge.</li>
 +                <li>Pick up to 5 roster moves.</li>
 +                <li>Simulate the season and review results.</li>
 +            </ol>
++            <p class="subtitle">Tip: Every choice changes wins, payroll, and playoff odds.</p>
 +            <button class="primary-btn" id="start-btn">START</button>
 +        </div>
 +    </div>
 +
-     <!-- Team Selection Screen -->
--    <div id="team-selection-screen" class="screen active">
++    <!-- Team Selection Screen -->
 +    <div id="team-selection-screen" class="screen">
-         <div class="header">
-             <h1>NBA GM CRISIS MANAGER</h1>
-             <p class="subtitle">Choose Your Challenge</p>
++        <div class="header">
++            <h1>CHOOSE YOUR TEAM</h1>
++            <p class="subtitle">Each team has a different mission and difficulty.</p>
          </div>
   
          <div class="team-grid">
@@ -57,7 +61,10 @@ index 68b2a9ce3cd8698d60f8a5ef640409fac9264636..b0a42a6b988cf88890d7824f9ee5c930
                  <div class="team-scenario">Second Apron Hell</div>
                  <div class="team-difficulty">
                      <span class="star filled">★</span>
-@@ -59,50 +76,78 @@
+                     <span class="star filled">★</span>
+                     <span class="star filled">★</span>
+                 </div>
+@@ -59,50 +78,83 @@
                  <div class="team-name">OKLAHOMA CITY THUNDER</div>
                  <div class="team-scenario">Defend The Crown</div>
                  <div class="team-difficulty">
@@ -87,8 +94,8 @@ index 68b2a9ce3cd8698d60f8a5ef640409fac9264636..b0a42a6b988cf88890d7824f9ee5c930
 +    <!-- Team Intro Screen -->
 +    <div id="team-intro-screen" class="screen">
 +        <div class="header">
-+            <h1>YOUR GM DESK</h1>
-+            <p class="subtitle">One team. One goal. Five moves.</p>
++            <h1>WELCOME TO YOUR GM DESK</h1>
++            <p class="subtitle">Quick briefing before you start making moves.</p>
 +        </div>
 +        <div class="intro-panel">
 +            <div class="intro-team">
@@ -100,6 +107,11 @@ index 68b2a9ce3cd8698d60f8a5ef640409fac9264636..b0a42a6b988cf88890d7824f9ee5c930
 +                <p id="intro-team-description">
 +                    Lillard out, Middleton traded. Save Giannis's season.
 +                </p>
++                <ol class="home-steps">
++                    <li>Pick up to 5 moves total.</li>
++                    <li>Watch how each move changes wins and payroll.</li>
++                    <li>Hit the targets to earn the claim code.</li>
++                </ol>
 +                <div class="intro-challenge">
 +                    <span class="label">Your Mission:</span>
 +                    <span id="intro-team-challenge">Make the playoffs or Giannis demands a trade.</span>
@@ -136,3 +148,63 @@ index 68b2a9ce3cd8698d60f8a5ef640409fac9264636..b0a42a6b988cf88890d7824f9ee5c930
                          <div class="stat-bar">
                              <div class="stat-bar-fill" id="payroll-bar"></div>
                          </div>
+@@ -136,55 +188,55 @@
+                         </div>
+                     </div>
+  
+                     <div class="stat-card">
+                         <div class="stat-label">📈 Performance Points</div>
+                         <div class="stat-bar">
+                             <div class="stat-bar-fill perf" id="perf-bar"></div>
+                         </div>
+                         <div class="stat-values">
+                             <span id="current-perf">34</span>
+                             <span>/</span>
+                             <span id="target-perf">47 Target</span>
+                         </div>
+                     </div>
+  
+                     <div class="stat-card tax-card">
+                         <div class="stat-label">⚠️ Luxury Tax</div>
+                         <div class="tax-info">
+                             <span id="tax-amount">$0</span>
+                             <span id="repeater-status" class="repeater-badge hidden">REPEATER</span>
+                         </div>
+                     </div>
+                 </div>
+  
+                 <div class="challenge-box" id="challenge-box">
+-                    <div class="challenge-label">THE CHALLENGE:</div>
+-                    <div class="challenge-text" id="challenge-text">
+-                        "Giannis is frustrated. Make the playoffs or he demands a trade."
+-                    </div>
++                <div class="challenge-label">THE CHALLENGE:</div>
++                <div class="challenge-text" id="challenge-text">
++                    "Giannis is frustrated. Make the playoffs or he demands a trade."
+                 </div>
++            </div>
+  
+                 <div class="current-roster">
+                     <h3>Current Roster</h3>
+                     <div class="roster-list" id="roster-list"></div>
+                 </div>
+             </div>
+  
+             <!-- Moves Panel -->
+             <div class="moves-panel">
+                 <div class="panel-header">
+                     <h2>YOUR ROSTER MOVES</h2>
+                     <span class="move-count">(<span id="selected-count">0</span>/5 Selected)</span>
+                 </div>
+  
+                 <div class="move-tabs">
+                     <button class="tab-btn active" data-category="trades">Trades (12)</button>
+                     <button class="tab-btn" data-category="free-agency">Free Agency (5)</button>
+                     <button class="tab-btn" data-category="extensions">Extensions (3)</button>
+                     <button class="tab-btn" data-category="development">Development (4)</button>
+                     <button class="tab-btn" data-category="savings">Savings (6)</button>
+                     <button class="tab-btn" data-category="status-quo">Status Quo (4)</button>
+                 </div>
+  
+                 <div class="moves-container" id="moves-container">
+                     <!-- Moves will be populated by JavaScript -->
