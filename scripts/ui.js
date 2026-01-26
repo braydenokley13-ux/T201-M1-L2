@@ -11,13 +11,23 @@ const UI = {
     cacheElements() {
         this.elements = {
             screens: document.querySelectorAll('.screen'),
+            homeScreen: document.getElementById('home-screen'),
             teamSelectionScreen: document.getElementById('team-selection-screen'),
+            teamIntroScreen: document.getElementById('team-intro-screen'),
             gameScreen: document.getElementById('game-screen'),
             resultsScreen: document.getElementById('results-screen'),
+            startBtn: document.getElementById('start-btn'),
+            enterGmBtn: document.getElementById('enter-gm-btn'),
+            changeTeamBtn: document.getElementById('change-team-btn'),
             backBtn: document.getElementById('back-btn'),
             simulateBtn: document.getElementById('simulate-btn'),
             tryAgainBtn: document.getElementById('try-again-btn'),
             tryAnotherBtn: document.getElementById('try-another-btn'),
+            introTeamEmoji: document.getElementById('intro-team-emoji'),
+            introTeamName: document.getElementById('intro-team-name'),
+            introTeamScenario: document.getElementById('intro-team-scenario'),
+            introTeamDescription: document.getElementById('intro-team-description'),
+            introTeamChallenge: document.getElementById('intro-team-challenge'),
             currentTeamEmoji: document.getElementById('current-team-emoji'),
             currentTeamName: document.getElementById('current-team-name'),
             scenarioName: document.getElementById('scenario-name'),
@@ -76,6 +86,14 @@ const UI = {
         this.elements.scenarioName.textContent = team.scenario;
         this.elements.challengeText.textContent = `"${team.situation.challenge}"`;
         this.elements.resultsSource.textContent = team.newspaper;
+    },
+
+    updateIntro(team) {
+        this.elements.introTeamEmoji.textContent = team.emoji;
+        this.elements.introTeamName.textContent = team.name.toUpperCase();
+        this.elements.introTeamScenario.textContent = team.scenario;
+        this.elements.introTeamDescription.textContent = team.situation.description;
+        this.elements.introTeamChallenge.textContent = team.situation.challenge;
     },
 
     renderRoster(team) {
