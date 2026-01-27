@@ -20,18 +20,17 @@
     <!-- Team Selection Screen -->
     <div id="team-selection-screen" class="screen active">
         <div class="hero-section">
-            <div class="badge">2025-26 SEASON</div>
+            <div class="badge">BOW SPORTS CAPITAL</div>
             <h1 class="hero-title">
                 <span class="title-line">NBA GM</span>
                 <span class="title-line gradient-text">CRISIS MANAGER</span>
             </h1>
-            <p class="hero-subtitle">Step into the front office. Make the tough calls. Build a championship roster.</p>
+            <p class="hero-subtitle">Step into the front office. Make the tough calls.</p>
         </div>
 
         <div class="team-selection-container">
             <div class="section-header">
                 <h2>Choose Your Challenge</h2>
-                <p>Each team has a unique crisis to solve</p>
             </div>
 
             <div class="team-grid">
@@ -136,10 +135,34 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <footer class="footer">
-            <p>Built with passion for basketball fans everywhere</p>
-        </footer>
+    <!-- Team Intro Screen -->
+    <div id="team-intro-screen" class="screen">
+        <div class="intro-container">
+            <div class="intro-header">
+                <span id="intro-team-emoji" class="intro-emoji">🦌</span>
+                <h1 id="intro-team-name">MILWAUKEE BUCKS</h1>
+                <p id="intro-team-scenario" class="intro-scenario">Injury Crisis & Reset</p>
+            </div>
+
+            <div class="intro-content">
+                <div class="intro-description">
+                    <h3>The Situation</h3>
+                    <p id="intro-team-description">Lillard out, Middleton traded. Save Giannis's season.</p>
+                </div>
+
+                <div class="intro-challenge">
+                    <h3>Your Mission</h3>
+                    <p id="intro-team-challenge">Make the playoffs or Giannis demands a trade.</p>
+                </div>
+            </div>
+
+            <div class="intro-actions">
+                <button id="change-team-btn" class="secondary-btn">Back to Teams</button>
+                <button id="enter-gm-btn" class="primary-btn">Enter GM Mode</button>
+            </div>
+        </div>
     </div>
 
     <!-- Main Game Screen -->
@@ -333,13 +356,35 @@
             </div>
 
             <div class="results-stats" id="results-stats">
-                <!-- Stats populated by JavaScript -->
+                <div class="result-stat" id="result-wins">
+                    <span class="result-label">Final Record</span>
+                    <span class="result-value">--</span>
+                    <span class="result-status"></span>
+                </div>
+                <div class="result-stat" id="result-payroll">
+                    <span class="result-label">Total Payroll</span>
+                    <span class="result-value">--</span>
+                    <span class="result-status"></span>
+                </div>
+                <div class="result-stat" id="result-perf">
+                    <span class="result-label">Performance Points</span>
+                    <span class="result-value">--</span>
+                    <span class="result-status"></span>
+                </div>
+                <div class="result-stat" id="result-playoff">
+                    <span class="result-label">Playoff Result</span>
+                    <span class="result-value">--</span>
+                </div>
+                <div class="result-stat" id="result-tax">
+                    <span class="result-label">Luxury Tax</span>
+                    <span class="result-value">--</span>
+                </div>
             </div>
 
-            <div class="owner-statement">
+            <div class="owner-statement" id="owner-statement">
                 <div class="statement-label">Owner Statement:</div>
-                <div class="statement-text" id="owner-statement-text">
-                    "Best GM in the league!"
+                <div class="statement-text" id="statement-text">
+                    "Let's see what you've got."
                 </div>
             </div>
 
@@ -366,7 +411,7 @@
             </div>
 
             <div class="claim-code-section" id="claim-code-section">
-                <div class="claim-code-label">🎉 Congratulations! Your Claim Code:</div>
+                <div class="claim-code-label">Congratulations! Your Claim Code:</div>
                 <div class="claim-code" id="claim-code">BUCKS-CHAMP-2025</div>
                 <div class="claim-code-note">Screenshot this to claim your reward!</div>
             </div>

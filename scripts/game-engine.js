@@ -12,25 +12,25 @@ const GameEngine = {
         UI.init();
         this.bindEvents();
         this.resetState();
-        UI.showScreen('home-screen');
+        UI.showScreen('team-selection-screen');
     },
 
     bindEvents() {
-        UI.elements.startBtn.addEventListener('click', () => {
-            UI.showScreen('team-selection-screen');
-        });
+        if (UI.elements.enterGmBtn) {
+            UI.elements.enterGmBtn.addEventListener('click', () => {
+                if (!this.state.currentTeam) {
+                    return;
+                }
+                this.renderCurrentState();
+                UI.showScreen('game-screen');
+            });
+        }
 
-        UI.elements.enterGmBtn.addEventListener('click', () => {
-            if (!this.state.currentTeam) {
-                return;
-            }
-            this.renderCurrentState();
-            UI.showScreen('game-screen');
-        });
-
-        UI.elements.changeTeamBtn.addEventListener('click', () => {
-            UI.showScreen('team-selection-screen');
-        });
+        if (UI.elements.changeTeamBtn) {
+            UI.elements.changeTeamBtn.addEventListener('click', () => {
+                UI.showScreen('team-selection-screen');
+            });
+        }
 
         document.querySelectorAll('.play-btn').forEach((button) => {
             button.addEventListener('click', (event) => {
@@ -102,10 +102,12 @@ const GameEngine = {
             UI.showScreen('game-screen');
         });
 
-        UI.elements.tryAnotherBtn.addEventListener('click', () => {
-            this.resetState();
-            UI.showScreen('team-selection-screen');
-        });
+        if (UI.elements.newTeamBtn) {
+            UI.elements.newTeamBtn.addEventListener('click', () => {
+                this.resetState();
+                UI.showScreen('team-selection-screen');
+            });
+        }
     },
 
     resetState() {
