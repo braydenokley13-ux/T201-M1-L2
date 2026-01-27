@@ -16,8 +16,12 @@ const GameEngine = {
     },
 
     bindEvents() {
-        if (UI.elements.enterGmBtn) {
-            UI.elements.enterGmBtn.addEventListener('click', () => {
+        // Intro screen buttons - use direct DOM query for reliability
+        const enterGmBtn = document.getElementById('enter-gm-btn');
+        const changeTeamBtn = document.getElementById('change-team-btn');
+
+        if (enterGmBtn) {
+            enterGmBtn.addEventListener('click', () => {
                 if (!this.state.currentTeam) {
                     return;
                 }
@@ -26,8 +30,8 @@ const GameEngine = {
             });
         }
 
-        if (UI.elements.changeTeamBtn) {
-            UI.elements.changeTeamBtn.addEventListener('click', () => {
+        if (changeTeamBtn) {
+            changeTeamBtn.addEventListener('click', () => {
                 UI.showScreen('team-selection-screen');
             });
         }
