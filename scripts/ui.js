@@ -22,7 +22,7 @@ const UI = {
             backBtn: document.getElementById('back-btn'),
             simulateBtn: document.getElementById('simulate-btn'),
             tryAgainBtn: document.getElementById('try-again-btn'),
-            tryAnotherBtn: document.getElementById('try-another-btn'),
+            newTeamBtn: document.getElementById('new-team-btn'),
             introTeamEmoji: document.getElementById('intro-team-emoji'),
             introTeamName: document.getElementById('intro-team-name'),
             introTeamScenario: document.getElementById('intro-team-scenario'),
@@ -61,10 +61,10 @@ const UI = {
             starRating: document.getElementById('star-rating'),
             ratingLabel: document.getElementById('rating-label'),
             movesSummaryList: document.getElementById('moves-summary-list'),
-            efficiencyScore: document.getElementById('efficiency-score'),
+            efficiencyScore: document.getElementById('efficiency-value'),
             claimCodeSection: document.getElementById('claim-code-section'),
             claimCode: document.getElementById('claim-code'),
-            noClaimCodeSection: document.getElementById('no-claim-code-section'),
+            noClaimCodeSection: document.getElementById('no-claim-code'),
             confettiCanvas: document.getElementById('confetti-canvas')
         };
     },
