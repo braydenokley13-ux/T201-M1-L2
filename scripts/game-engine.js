@@ -23,6 +23,7 @@ const GameEngine = {
         if (enterGmBtn) {
             enterGmBtn.addEventListener('click', () => {
                 if (!this.state.currentTeam) {
+                    alert('Please select a team first!');
                     return;
                 }
                 this.renderCurrentState();
@@ -150,7 +151,16 @@ const GameEngine = {
     },
 
     renderMoves() {
-        const filtered = MOVES.filter((move) => move.category === this.state.activeCategory);
+        let filtered;
+        if (this.state.activeCategory === 'other') {
+            filtered = MOVES.filter((move) =>
+                move.category === 'extensions' ||
+                move.category === 'development' ||
+                move.category === 'status-quo'
+            );
+        } else {
+            filtered = MOVES.filter((move) => move.category === this.state.activeCategory);
+        }
         const maxReached = this.state.selectedMoves.length >= 5;
         UI.renderMoves(filtered, this.state.selectedMoves, maxReached);
         UI.updateSelectedMoves(this.state.selectedMoves);

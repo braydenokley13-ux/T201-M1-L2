@@ -69,11 +69,29 @@ const MOVES = [
     {
         id: 'trade-future-assets',
         category: 'trades',
-        title: 'Sell Veteran for Future Assets',
-        trade: { give: 'Starter', get: '2 first-round picks' },
-        description: 'Long-term flexibility but a short-term dip.',
-        impact: { payroll: -10, wins: -3, playoffWins: -1, perfPoints: -4 },
-        scout: 'Great for rebuilds, rough for win-now.'
+        title: 'Rebuild Move: Trade Star for Picks',
+        trade: { give: 'Best player + salary filler', get: '3 unprotected 1sts + young prospect' },
+        description: 'Full tank mode. Sell your star for future assets.',
+        impact: { payroll: -18, wins: -8, playoffWins: -2, perfPoints: -10 },
+        scout: 'Nuclear option for rebuilds. Ownership must approve.'
+    },
+    {
+        id: 'trade-accept-bad-contract',
+        category: 'trades',
+        title: 'Rebuild Move: Accept Bad Contract',
+        trade: { give: 'Expiring contracts', get: 'Overpaid vet + 2 first-round picks' },
+        description: 'Take on salary dumps in exchange for draft capital.',
+        impact: { payroll: 12, wins: -1, playoffWins: 0, perfPoints: -2 },
+        scout: 'Classic tank move. Use cap space for picks.'
+    },
+    {
+        id: 'trade-sell-expirings',
+        category: 'trades',
+        title: 'Rebuild Move: Flip All Expiring Deals',
+        trade: { give: 'All expiring contracts', get: 'Future 1st + young players' },
+        description: 'Convert expirings to long-term assets before deadline.',
+        impact: { payroll: -8, wins: -2, playoffWins: 0, perfPoints: -3 },
+        scout: 'Smart tank strategy for deadline deals.'
     },
     {
         id: 'trade-playoff-veteran',
@@ -265,6 +283,30 @@ const MOVES = [
         impact: { payroll: -7, wins: -1, playoffWins: 0, perfPoints: -2 },
         scout: 'Maximizes savings, lowers competitiveness.'
     },
+    {
+        id: 'save-waive-stretch',
+        category: 'savings',
+        title: 'Waive and Stretch Expensive Vet',
+        description: 'Use stretch provision to spread dead cap over 3 years.',
+        impact: { payroll: -12, wins: -3, playoffWins: -1, perfPoints: -4 },
+        scout: 'Painful short-term, but opens max slot next year.'
+    },
+    {
+        id: 'save-amnesty-deal',
+        category: 'savings',
+        title: 'Amnesty Bad Contract (If Available)',
+        description: 'Use one-time amnesty to clear terrible deal off books.',
+        impact: { payroll: -22, wins: -1, playoffWins: 0, perfPoints: -2 },
+        scout: 'Instant cap relief but you lose the player.'
+    },
+    {
+        id: 'save-decline-options',
+        category: 'savings',
+        title: 'Decline All Team Options',
+        description: 'Cut loose borderline players to save money.',
+        impact: { payroll: -10, wins: -2, playoffWins: 0, perfPoints: -3 },
+        scout: 'Smart if you need flexibility for free agency.'
+    },
 
     // Status Quo (4)
     {
@@ -298,6 +340,22 @@ const MOVES = [
         description: 'Wait for more data before committing.',
         impact: { payroll: 0, wins: 0, playoffWins: 0, perfPoints: 0 },
         scout: 'Low risk, low reward.'
+    },
+    {
+        id: 'dev-tank-for-picks',
+        category: 'development',
+        title: 'Tank for Top Draft Pick',
+        description: 'Shut down vets, play young guys, lose games strategically.',
+        impact: { payroll: -3, wins: -10, playoffWins: -2, perfPoints: -12 },
+        scout: 'Fans will hate it but future could be bright.'
+    },
+    {
+        id: 'dev-youth-movement',
+        category: 'development',
+        title: 'Full Youth Movement',
+        description: 'Trade all vets 28+, commit to player development.',
+        impact: { payroll: -14, wins: -6, playoffWins: -1, perfPoints: -8 },
+        scout: 'Multi-year rebuild plan. Patience required.'
     }
 ];
 

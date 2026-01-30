@@ -29,7 +29,7 @@ const Calculator = {
             }
             const taxable = Math.min(bracket.limit, remaining);
             const rate = bracket.rate + repeaterAdd;
-            const amount = taxable * rate;
+            const amount = taxable * (1 + rate);
             taxTotal += amount;
             breakdown.push({
                 bracket: index + 1,
@@ -42,7 +42,7 @@ const Calculator = {
 
         if (remaining > 0) {
             const rate = 5.75 + repeaterAdd;
-            const amount = remaining * rate;
+            const amount = remaining * (1 + rate);
             taxTotal += amount;
             breakdown.push({
                 bracket: brackets.length + 1,

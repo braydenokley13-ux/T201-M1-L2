@@ -195,7 +195,7 @@
                     <div class="stat-card">
                         <div class="stat-header">
                             <span class="stat-icon">💰</span>
-                            <span class="stat-label">Total Spend</span>
+                            <span class="stat-label">Total Payroll</span>
                         </div>
                         <div class="stat-bar">
                             <div class="stat-bar-fill" id="payroll-bar"></div>
@@ -222,45 +222,25 @@
                         </div>
                     </div>
 
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <span class="stat-icon">🏀</span>
-                            <span class="stat-label">Playoff Wins</span>
-                        </div>
-                        <div class="stat-bar">
-                            <div class="stat-bar-fill playoff" id="playoff-bar"></div>
-                        </div>
-                        <div class="stat-values">
-                            <span id="current-playoff-wins" class="stat-current">0</span>
-                            <span class="stat-label-small">projected</span>
-                        </div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <span class="stat-icon">📈</span>
-                            <span class="stat-label">Performance Points</span>
-                        </div>
-                        <div class="stat-bar">
-                            <div class="stat-bar-fill perf" id="perf-bar"></div>
-                        </div>
-                        <div class="stat-values">
-                            <span id="current-perf" class="stat-current">34</span>
-                            <span class="stat-divider">/</span>
-                            <span id="target-perf" class="stat-target">47 Target</span>
-                        </div>
-                    </div>
-
                     <div class="stat-card tax-card">
                         <div class="stat-header">
                             <span class="stat-icon">⚠️</span>
-                            <span class="stat-label">Luxury Tax</span>
+                            <span class="stat-label">Luxury Tax Bill</span>
                         </div>
                         <div class="tax-info">
                             <span id="tax-amount" class="tax-amount">$0</span>
                             <span id="repeater-status" class="repeater-badge hidden">REPEATER</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- Hidden stats for calculation only -->
+                <div style="display: none;">
+                    <div id="current-playoff-wins">0</div>
+                    <div id="current-perf">34</div>
+                    <div id="target-perf">47</div>
+                    <div id="playoff-bar"></div>
+                    <div id="perf-bar"></div>
                 </div>
 
                 <div class="challenge-box" id="challenge-box">
@@ -299,23 +279,15 @@
                     </button>
                     <button class="tab-btn" data-category="free-agency">
                         <span class="tab-icon">✍️</span>
-                        Free Agency
-                    </button>
-                    <button class="tab-btn" data-category="extensions">
-                        <span class="tab-icon">📝</span>
-                        Extensions
-                    </button>
-                    <button class="tab-btn" data-category="development">
-                        <span class="tab-icon">📈</span>
-                        Development
+                        Sign Players
                     </button>
                     <button class="tab-btn" data-category="savings">
                         <span class="tab-icon">💵</span>
-                        Savings
+                        Cut Costs
                     </button>
-                    <button class="tab-btn" data-category="status-quo">
-                        <span class="tab-icon">⏸️</span>
-                        Status Quo
+                    <button class="tab-btn" data-category="other">
+                        <span class="tab-icon">⚙️</span>
+                        Other
                     </button>
                 </div>
 
