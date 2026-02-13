@@ -112,6 +112,25 @@ const GameEngine = {
                 UI.showScreen('team-selection-screen');
             });
         }
+
+        const shareBtn = document.getElementById('share-btn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                if (!this.state.currentTeam) {
+                    return;
+                }
+                const summary = this.calculateSummary();
+                const team = this.state.currentTeam;
+                const text = `NBA GM Crisis Manager\nTeam: ${team.name}\nRecord: ${summary.wins}-${82 - summary.wins}\nPayroll: ${Calculator.formatCurrency(summary.payroll)}\nPerf Points: ${summary.perfPoints}\nMoves: ${this.state.selectedMoves.map(m => m.title).join(', ') || 'None'}`;
+                navigator.clipboard.writeText(text).then(() => {
+                    shareBtn.textContent = 'Copied!';
+                    setTimeout(() => { shareBtn.textContent = 'Share Results'; }, 2000);
+                }).catch(() => {
+                    shareBtn.textContent = 'Copy failed';
+                    setTimeout(() => { shareBtn.textContent = 'Share Results'; }, 2000);
+                });
+            });
+        }
     },
 
     resetState() {
