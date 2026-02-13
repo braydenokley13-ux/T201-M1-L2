@@ -554,7 +554,7 @@ body {
    ============================================= */
 .game-content {
     display: grid;
-    grid-template-columns: 420px 1fr;
+    grid-template-columns: 340px 1fr;
     min-height: calc(100vh - 70px);
 }
 
@@ -569,67 +569,67 @@ body {
    ============================================= */
 .dashboard-panel {
     background: var(--bg-secondary);
-    padding: var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
     border-right: 1px solid rgba(255, 255, 255, 0.05);
     overflow-y: auto;
 }
 
 .panel-header {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
 }
 
 .panel-header h2 {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-xs);
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: var(--text-primary);
 }
 
 .panel-icon {
-    font-size: 1.25rem;
+    font-size: 1rem;
 }
 
 /* =============================================
    STATS GRID
    ============================================= */
 .stats-grid {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-sm);
 }
 
 .stat-card {
     background: var(--bg-panel);
-    padding: var(--spacing-md);
-    border-radius: var(--radius-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .stat-header {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-sm);
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
 }
 
 .stat-icon {
-    font-size: 1rem;
+    font-size: 0.85rem;
 }
 
 .stat-label {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: var(--text-secondary);
 }
 
 .stat-bar {
-    height: 10px;
+    height: 6px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: var(--radius-full);
     overflow: hidden;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
 }
 
 .stat-bar-fill {
@@ -665,12 +665,12 @@ body {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 .stat-current {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: var(--text-primary);
 }
 
@@ -689,6 +689,7 @@ body {
 
 /* Tax Card */
 .tax-card {
+    grid-column: 1 / -1;
     border: 1px solid rgba(245, 158, 11, 0.3);
     background: rgba(245, 158, 11, 0.05);
 }
@@ -696,11 +697,11 @@ body {
 .tax-info {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
 }
 
 .tax-amount {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--warning);
 }
@@ -724,10 +725,10 @@ body {
    ============================================= */
 .challenge-box {
     background: var(--bg-panel);
-    border-left: 4px solid var(--team-primary);
-    padding: var(--spacing-md);
-    border-radius: var(--radius-lg);
-    margin-top: var(--spacing-lg);
+    border-left: 3px solid var(--team-primary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-sm);
 }
 
 .challenge-header {
@@ -752,23 +753,24 @@ body {
 .challenge-text {
     font-style: italic;
     color: var(--text-primary);
-    line-height: 1.6;
+    font-size: 0.85rem;
+    line-height: 1.5;
 }
 
 /* =============================================
    CURRENT ROSTER
    ============================================= */
 .current-roster {
-    margin-top: var(--spacing-lg);
+    margin-top: var(--spacing-sm);
 }
 
 .current-roster h3 {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
-    font-size: 0.9rem;
+    gap: var(--spacing-xs);
+    font-size: 0.8rem;
     color: var(--text-secondary);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
 }
 
 .roster-icon {
@@ -783,9 +785,9 @@ body {
 
 .roster-player {
     background: var(--bg-panel);
-    padding: 6px 12px;
+    padding: 4px 10px;
     border-radius: var(--radius-full);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-secondary);
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -861,10 +863,10 @@ body {
    ============================================= */
 .moves-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
-    max-height: 400px;
+    max-height: 520px;
     overflow-y: auto;
     padding-right: var(--spacing-sm);
 }
@@ -893,8 +895,8 @@ body {
    ============================================= */
 .move-card {
     background: var(--bg-panel);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-md);
     cursor: pointer;
     transition: all var(--transition-normal);
     border: 2px solid transparent;
@@ -947,9 +949,13 @@ body {
 }
 
 .move-trade-info {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
     margin-bottom: var(--spacing-xs);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2px;
 }
 
 .move-trade-info .give { color: var(--danger); }
@@ -979,6 +985,16 @@ body {
     font-style: italic;
     padding-top: var(--spacing-sm);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.move-scout.team-specific {
+    color: var(--team-primary);
+    border-top-color: rgba(var(--team-primary), 0.2);
+}
+
+.trade-arrow {
+    color: var(--text-muted);
+    margin: 0 var(--spacing-xs);
 }
 
 .move-warning {

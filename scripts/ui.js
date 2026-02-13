@@ -106,9 +106,10 @@ const UI = {
         });
     },
 
-    renderMoves(moves, selectedMoves, maxReached) {
+    renderMoves(moves, selectedMoves, maxReached, team) {
         this.elements.movesContainer.innerHTML = '';
         this.elements.movesContainer.scrollTop = 0;
+        const teamContext = (team && team.moveContext) || {};
 
         moves.forEach((move) => {
             const card = document.createElement('div');
@@ -123,12 +124,7 @@ const UI = {
             title.className = 'move-title';
             title.textContent = move.title;
 
-            const label = document.createElement('div');
-            label.className = 'move-category-label';
-            label.textContent = move.category.replace('-', ' ').toUpperCase();
-
             header.appendChild(title);
-            header.appendChild(label);
 
             const details = document.createElement('div');
             details.className = 'move-details';
@@ -137,7 +133,7 @@ const UI = {
             const tradeInfo = document.createElement('div');
             if (move.trade) {
                 tradeInfo.className = 'move-trade-info';
-                tradeInfo.innerHTML = `<div class="give">Give: ${move.trade.give}</div><div class="get">Get: ${move.trade.get}</div>`;
+                tradeInfo.innerHTML = `<span class="give">Give: ${move.trade.give}</span> <span class="trade-arrow">&rarr;</span> <span class="get">Get: ${move.trade.get}</span>`;
             }
 
             const impact = document.createElement('div');
@@ -147,9 +143,13 @@ const UI = {
             impact.appendChild(this.createImpactItem('Playoff', move.impact.playoffWins, '🏀'));
             impact.appendChild(this.createImpactItem('Perf', move.impact.perfPoints, '📈'));
 
+            const scoutText = teamContext[move.id] || move.scout;
             const scout = document.createElement('div');
             scout.className = 'move-scout';
-            scout.textContent = move.scout;
+            if (teamContext[move.id]) {
+                scout.classList.add('team-specific');
+            }
+            scout.textContent = scoutText;
 
             const selectBtn = document.createElement('button');
             selectBtn.className = 'select-btn';

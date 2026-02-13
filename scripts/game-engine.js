@@ -171,7 +171,7 @@ const GameEngine = {
     renderMoves() {
         const filtered = MOVES.filter((move) => move.category === this.state.activeCategory);
         const maxReached = this.state.selectedMoves.length >= 5;
-        UI.renderMoves(filtered, this.state.selectedMoves, maxReached);
+        UI.renderMoves(filtered, this.state.selectedMoves, maxReached, this.state.currentTeam);
         UI.updateSelectedMoves(this.state.selectedMoves);
     },
 
