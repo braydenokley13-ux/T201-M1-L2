@@ -108,6 +108,7 @@ const UI = {
 
     renderMoves(moves, selectedMoves, maxReached) {
         this.elements.movesContainer.innerHTML = '';
+        this.elements.movesContainer.scrollTop = 0;
 
         moves.forEach((move) => {
             const card = document.createElement('div');
@@ -189,7 +190,9 @@ const UI = {
         const playoffPercent = Math.min((summary.playoffWins / 16) * 100, 100);
         const perfPercent = Math.min((summary.perfPoints / team.targets.perfPoints) * 100, 100);
 
+        const isOverBudget = summary.payroll > team.targets.maxSpend;
         this.elements.payrollBar.style.width = `${payrollPercent}%`;
+        this.elements.payrollBar.classList.toggle('over-budget', isOverBudget);
         this.elements.winsBar.style.width = `${winsPercent}%`;
         this.elements.playoffBar.style.width = `${playoffPercent}%`;
         this.elements.perfBar.style.width = `${perfPercent}%`;
@@ -247,6 +250,7 @@ const UI = {
 
     renderResults(results, team) {
         this.elements.resultsHeadline.textContent = results.success ? team.headlines.success : team.headlines.failure;
+        this.elements.resultsHeadline.className = `results-headline ${results.success ? 'success' : 'failure'}`;
         this.elements.statementText.textContent = results.success ? team.statements.success : team.statements.failure;
 
         this.elements.resultWins.querySelector('.result-value').textContent = `${results.wins}-${82 - results.wins}`;
@@ -287,6 +291,14 @@ const UI = {
             this.elements.starRating.appendChild(star);
         }
         this.elements.ratingLabel.textContent = results.success ? 'SUCCESS!' : results.hitCount >= 2 ? 'CLOSE!' : 'FAILURE';
+        this.elements.ratingLabel.className = 'rating-label';
+        if (results.success) {
+            this.elements.ratingLabel.classList.add('success');
+        } else if (results.hitCount >= 2) {
+            this.elements.ratingLabel.classList.add('close');
+        } else {
+            this.elements.ratingLabel.classList.add('failure');
+        }
 
         if (results.success) {
             this.elements.claimCodeSection.style.display = 'block';
@@ -298,24 +310,27 @@ const UI = {
         }
 
         if (results.success) {
-            this.launchConfetti();
+            this.launchConfetti(team.colors);
         } else {
             this.clearConfetti();
         }
     },
 
-    launchConfetti() {
+    launchConfetti(teamColors) {
         const canvas = this.elements.confettiCanvas;
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+
+        const color1 = teamColors ? teamColors.primary : '#3b82f6';
+        const color2 = teamColors ? teamColors.secondary : '#ec4899';
 
         const pieces = Array.from({ length: 120 }, () => ({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height - canvas.height,
             size: 6 + Math.random() * 6,
             speed: 2 + Math.random() * 3,
-            color: Math.random() > 0.5 ? 'rgba(29, 66, 138, 0.9)' : 'rgba(200, 16, 46, 0.9)'
+            color: Math.random() > 0.5 ? color1 : color2
         }));
 
         let animationFrame;

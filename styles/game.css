@@ -392,7 +392,7 @@ body {
 /* =============================================
    TEAM INTRO SCREEN
    ============================================= */
-#team-intro-screen {
+#team-intro-screen.active {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -941,6 +941,9 @@ body {
 
 .move-details {
     margin-bottom: var(--spacing-sm);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
 }
 
 .move-trade-info {
@@ -1141,10 +1144,13 @@ body {
    ============================================= */
 #results-screen {
     background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-    padding: var(--spacing-xl);
+}
+
+#results-screen.active {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: var(--spacing-xl);
 }
 
 .results-container {
@@ -1183,8 +1189,19 @@ body {
     background-clip: text;
 }
 
-.results-headline.success { color: var(--success); }
-.results-headline.failure { color: var(--danger); }
+.results-headline.success {
+    background: var(--gradient-success);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.results-headline.failure {
+    background: var(--gradient-fire);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
 
 .results-source {
     color: var(--text-muted);
@@ -1290,6 +1307,7 @@ body {
 }
 
 .rating-label.success { color: var(--success); }
+.rating-label.close { color: var(--warning); }
 .rating-label.failure { color: var(--danger); }
 
 /* Moves Summary */
