@@ -28,6 +28,9 @@ const UI = {
             introTeamScenario: document.getElementById('intro-team-scenario'),
             introTeamDescription: document.getElementById('intro-team-description'),
             introTeamChallenge: document.getElementById('intro-team-challenge'),
+            introTargetWins: document.getElementById('intro-target-wins'),
+            introTargetPerf: document.getElementById('intro-target-perf'),
+            introTargetSpend: document.getElementById('intro-target-spend'),
             currentTeamEmoji: document.getElementById('current-team-emoji'),
             currentTeamName: document.getElementById('current-team-name'),
             scenarioName: document.getElementById('scenario-name'),
@@ -94,6 +97,9 @@ const UI = {
         this.elements.introTeamScenario.textContent = team.scenario;
         this.elements.introTeamDescription.textContent = team.situation.description;
         this.elements.introTeamChallenge.textContent = team.situation.challenge;
+        this.elements.introTargetWins.textContent = `${team.targets.wins}+`;
+        this.elements.introTargetPerf.textContent = `${team.targets.perfPoints}+`;
+        this.elements.introTargetSpend.textContent = Calculator.formatCurrency(team.targets.maxSpend);
     },
 
     renderRoster(team) {
@@ -106,9 +112,10 @@ const UI = {
         });
     },
 
-    renderMoves(moves, selectedMoves, maxReached) {
+    renderMoves(moves, selectedMoves, maxReached, team) {
         this.elements.movesContainer.innerHTML = '';
         this.elements.movesContainer.scrollTop = 0;
+        const teamContext = (team && team.moveContext) || {};
 
         moves.forEach((move) => {
             const card = document.createElement('div');
@@ -123,12 +130,7 @@ const UI = {
             title.className = 'move-title';
             title.textContent = move.title;
 
-            const label = document.createElement('div');
-            label.className = 'move-category-label';
-            label.textContent = move.category.replace('-', ' ').toUpperCase();
-
             header.appendChild(title);
-            header.appendChild(label);
 
             const details = document.createElement('div');
             details.className = 'move-details';
@@ -137,7 +139,7 @@ const UI = {
             const tradeInfo = document.createElement('div');
             if (move.trade) {
                 tradeInfo.className = 'move-trade-info';
-                tradeInfo.innerHTML = `<div class="give">Give: ${move.trade.give}</div><div class="get">Get: ${move.trade.get}</div>`;
+                tradeInfo.innerHTML = `<span class="give">Give: ${move.trade.give}</span> <span class="trade-arrow">&rarr;</span> <span class="get">Get: ${move.trade.get}</span>`;
             }
 
             const impact = document.createElement('div');
@@ -147,9 +149,13 @@ const UI = {
             impact.appendChild(this.createImpactItem('Playoff', move.impact.playoffWins, '🏀'));
             impact.appendChild(this.createImpactItem('Perf', move.impact.perfPoints, '📈'));
 
+            const scoutText = teamContext[move.id] || move.scout;
             const scout = document.createElement('div');
             scout.className = 'move-scout';
-            scout.textContent = move.scout;
+            if (teamContext[move.id]) {
+                scout.classList.add('team-specific');
+            }
+            scout.textContent = scoutText;
 
             const selectBtn = document.createElement('button');
             selectBtn.className = 'select-btn';
@@ -176,11 +182,13 @@ const UI = {
     },
 
     createImpactItem(label, value, emoji) {
-        const item = document.createElement('div');
+        const item = document.createElement('span');
         const status = value > 0 ? 'positive' : value < 0 ? 'negative' : 'neutral';
-        item.className = `impact-item ${status}`;
+        item.className = `impact-badge ${status}`;
         const sign = value > 0 ? '+' : '';
-        item.textContent = `${emoji} ${label}: ${sign}${value}`;
+        const shortLabels = { Payroll: 'M', Wins: 'W', Playoff: 'PO', Perf: 'PP' };
+        item.textContent = `${sign}${value}${shortLabels[label] || ''}`;
+        item.title = `${label}: ${sign}${value}`;
         return item;
     },
 
@@ -205,6 +213,10 @@ const UI = {
         this.elements.currentPerf.textContent = summary.perfPoints;
         this.elements.targetPerf.textContent = `${team.targets.perfPoints} Target`;
         this.elements.taxAmount.textContent = Calculator.formatCurrency(summary.tax);
+
+        this.elements.payrollBar.closest('.stat-card').classList.toggle('target-hit', !isOverBudget);
+        this.elements.winsBar.closest('.stat-card').classList.toggle('target-hit', summary.wins >= team.targets.wins);
+        this.elements.perfBar.closest('.stat-card').classList.toggle('target-hit', summary.perfPoints >= team.targets.perfPoints);
 
         if (team.baseState.isRepeater) {
             this.elements.repeaterStatus.classList.remove('hidden');
@@ -246,6 +258,23 @@ const UI = {
 
             this.elements.selectedMovesList.appendChild(item);
         });
+
+        if (selectedMoves.length > 0) {
+            const totals = selectedMoves.reduce(
+                (acc, move) => {
+                    acc.payroll += move.impact.payroll;
+                    acc.wins += move.impact.wins;
+                    acc.perfPoints += move.impact.perfPoints;
+                    return acc;
+                },
+                { payroll: 0, wins: 0, perfPoints: 0 }
+            );
+            const summary = document.createElement('div');
+            summary.className = 'selected-moves-totals';
+            const fmtVal = (v) => (v >= 0 ? `+${v}` : `${v}`);
+            summary.innerHTML = `<span class="totals-label">Net Impact:</span> <span class="${totals.payroll > 0 ? 'negative' : 'positive'}">${fmtVal(totals.payroll)}M</span> <span class="${totals.wins >= 0 ? 'positive' : 'negative'}">${fmtVal(totals.wins)}W</span> <span class="${totals.perfPoints >= 0 ? 'positive' : 'negative'}">${fmtVal(totals.perfPoints)}PP</span>`;
+            this.elements.selectedMovesList.appendChild(summary);
+        }
     },
 
     renderResults(results, team) {

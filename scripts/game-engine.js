@@ -166,12 +166,13 @@ const GameEngine = {
         UI.updateSelectedMoves(this.state.selectedMoves);
         const summary = this.calculateSummary();
         UI.updateStats(summary, this.state.currentTeam);
+        UI.elements.simulateBtn.classList.toggle('ready', this.state.selectedMoves.length > 0);
     },
 
     renderMoves() {
         const filtered = MOVES.filter((move) => move.category === this.state.activeCategory);
         const maxReached = this.state.selectedMoves.length >= 5;
-        UI.renderMoves(filtered, this.state.selectedMoves, maxReached);
+        UI.renderMoves(filtered, this.state.selectedMoves, maxReached, this.state.currentTeam);
         UI.updateSelectedMoves(this.state.selectedMoves);
     },
 
