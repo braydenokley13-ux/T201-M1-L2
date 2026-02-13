@@ -126,28 +126,41 @@ const UI = {
             const header = document.createElement('div');
             header.className = 'move-header';
 
-            const title = document.createElement('div');
+            const titleRow = document.createElement('div');
+            titleRow.className = 'move-title-row';
+
+            const title = document.createElement('span');
             title.className = 'move-title';
             title.textContent = move.title;
 
-            header.appendChild(title);
+            const indicator = document.createElement('span');
+            indicator.className = 'move-select-indicator';
+            indicator.textContent = isSelected ? '✓' : '+';
 
-            const details = document.createElement('div');
-            details.className = 'move-details';
-            details.textContent = move.description;
-
-            const tradeInfo = document.createElement('div');
-            if (move.trade) {
-                tradeInfo.className = 'move-trade-info';
-                tradeInfo.innerHTML = `<span class="give">Give: ${move.trade.give}</span> <span class="trade-arrow">&rarr;</span> <span class="get">Get: ${move.trade.get}</span>`;
-            }
+            titleRow.appendChild(title);
+            titleRow.appendChild(indicator);
 
             const impact = document.createElement('div');
             impact.className = 'move-impact';
             impact.appendChild(this.createImpactItem('Payroll', move.impact.payroll, '💰'));
             impact.appendChild(this.createImpactItem('Wins', move.impact.wins, '🏆'));
-            impact.appendChild(this.createImpactItem('Playoff', move.impact.playoffWins, '🏀'));
+            if (move.impact.playoffWins !== 0) {
+                impact.appendChild(this.createImpactItem('Playoff', move.impact.playoffWins, '🏀'));
+            }
             impact.appendChild(this.createImpactItem('Perf', move.impact.perfPoints, '📈'));
+
+            header.appendChild(titleRow);
+            header.appendChild(impact);
+
+            if (move.trade) {
+                const tradeInfo = document.createElement('div');
+                tradeInfo.className = 'move-trade-info';
+                tradeInfo.innerHTML = `<span class="give">${move.trade.give}</span> <span class="trade-arrow">&rarr;</span> <span class="get">${move.trade.get}</span>`;
+                card.appendChild(header);
+                card.appendChild(tradeInfo);
+            } else {
+                card.appendChild(header);
+            }
 
             const scoutText = teamContext[move.id] || move.scout;
             const scout = document.createElement('div');
@@ -155,27 +168,14 @@ const UI = {
             if (teamContext[move.id]) {
                 scout.classList.add('team-specific');
             }
-            scout.textContent = scoutText;
-
-            const selectBtn = document.createElement('button');
-            selectBtn.className = 'select-btn';
-            selectBtn.type = 'button';
-            selectBtn.textContent = isSelected ? 'SELECTED' : 'SELECT MOVE';
-
-            card.appendChild(header);
-            if (move.trade) {
-                card.appendChild(tradeInfo);
-            }
-            card.appendChild(details);
-            card.appendChild(impact);
             if (move.warning) {
-                const warning = document.createElement('div');
-                warning.className = 'move-warning';
-                warning.textContent = move.warning;
-                card.appendChild(warning);
+                scout.textContent = `⚠️ ${scoutText}`;
+                scout.classList.add('has-warning');
+            } else {
+                scout.textContent = scoutText;
             }
+
             card.appendChild(scout);
-            card.appendChild(selectBtn);
 
             this.elements.movesContainer.appendChild(card);
         });
