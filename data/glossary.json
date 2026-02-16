@@ -1,0 +1,127 @@
+[
+  {
+    "term": "Luxury Tax",
+    "definition": "A penalty paid by teams whose total payroll exceeds the luxury tax threshold. The NBA uses this to discourage excessive spending and promote competitive balance.",
+    "example": "If your payroll is $200M and the tax line is $171M, you pay a progressive tax on the $29M overage."
+  },
+  {
+    "term": "First Apron",
+    "definition": "The first luxury tax threshold ($178M in 2025-26). Teams above this line face restrictions on signing players and making trades.",
+    "example": "Teams above the first apron cannot use the full Mid-Level Exception."
+  },
+  {
+    "term": "Second Apron",
+    "definition": "A more punitive luxury tax threshold ($189M in 2025-26). Teams above this face severe restrictions including frozen draft picks and trade limitations.",
+    "example": "The Cavaliers are the only team in the second apron this season at $228M payroll."
+  },
+  {
+    "term": "Repeater Tax",
+    "definition": "An additional tax penalty for teams that have paid luxury tax in 3 of the past 4 seasons. The tax rate increases by an additional multiplier.",
+    "example": "Warriors are repeater tax payers, so they pay 1.5x more in penalties than non-repeaters."
+  },
+  {
+    "term": "Performance Points",
+    "definition": "A composite score combining wins, playoff performance, and team efficiency. Used to measure overall team success in this simulator.",
+    "example": "Performance points = (Wins × 1.2) + (Playoff Wins × 5) + bonuses for efficiency."
+  },
+  {
+    "term": "Salary Cap",
+    "definition": "The maximum amount teams can spend on player salaries. The 2025-26 cap is approximately $141M (soft cap - teams can exceed it with exceptions).",
+    "example": "Teams can go over the cap using Bird rights or exceptions like the MLE."
+  },
+  {
+    "term": "Mid-Level Exception (MLE)",
+    "definition": "An exception allowing teams over the cap to sign a free agent for approximately $8-12M per year, depending on their cap situation.",
+    "example": "The Bucks could use their MLE to sign a veteran role player without affecting other roster moves."
+  },
+  {
+    "term": "Bird Rights",
+    "definition": "Named after Larry Bird, this allows teams to exceed the cap to re-sign their own free agents. Players must have been with the team for 3+ years.",
+    "example": "The Bucks can offer Giannis any contract amount using his Bird rights, even if over the cap."
+  },
+  {
+    "term": "Trade Exception",
+    "definition": "Created when a team trades a player without taking back equal salary. Can be used within a year to acquire players without matching salaries.",
+    "example": "Trading away a $10M player for picks creates a $10M trade exception."
+  },
+  {
+    "term": "Salary Dump",
+    "definition": "Trading away an expensive player (often with draft picks) to reduce payroll and avoid luxury tax penalties.",
+    "example": "Trading Kuzma and a 2nd round pick to shed his $23M salary is a classic dump move."
+  },
+  {
+    "term": "Expiring Contract",
+    "definition": "A player contract that ends this season, creating immediate cap flexibility next year.",
+    "example": "Acquiring expiring contracts helps teams reset their cap situation for the following season."
+  },
+  {
+    "term": "Rookie Scale Contract",
+    "definition": "Predetermined salaries for draft picks based on their draft position. These contracts are team-friendly and below market value.",
+    "example": "A top-5 pick makes roughly $8-12M in their first year on a rookie scale deal."
+  },
+  {
+    "term": "Contract Extension",
+    "definition": "Extending a player's contract before it expires. Can lock in stars or negotiate team-friendly deals before they hit free agency.",
+    "example": "Extending Giannis now prevents him from becoming a free agent and demanding a trade."
+  },
+  {
+    "term": "Buyout",
+    "definition": "Negotiating with a player to pay less than their full contract in exchange for releasing them. Both sides must agree.",
+    "example": "Buying out a $15M contract for $12M saves $3M in payroll."
+  },
+  {
+    "term": "Veteran Minimum",
+    "definition": "The minimum salary a veteran player can be paid, based on years of service. A cheap way to add depth.",
+    "example": "Signing a 10-year veteran on a minimum deal costs ~$3M but only counts $2M against the cap."
+  },
+  {
+    "term": "Two-Way Contract",
+    "definition": "A contract allowing players to split time between the NBA team and G-League affiliate. Costs significantly less than standard deals.",
+    "example": "Two-way players can be called up for up to 50 NBA games and make ~$500K total."
+  },
+  {
+    "term": "Restricted Free Agent",
+    "definition": "A free agent whose current team can match any offer from another team. Gives teams leverage to retain young talent.",
+    "example": "If another team offers your RFA $20M/year, you can match and keep them."
+  },
+  {
+    "term": "Unrestricted Free Agent",
+    "definition": "A free agent who can sign with any team. The original team has no right to match offers.",
+    "example": "When Brook Lopez became a UFA, he freely chose to sign with the Clippers."
+  },
+  {
+    "term": "Pick-and-Roll Efficiency",
+    "definition": "How effectively a team scores using the pick-and-roll offensive play. Key metric for evaluating guards and centers.",
+    "example": "Adding an athletic roll man improves your pick-and-roll points per possession."
+  },
+  {
+    "term": "Floor Spacing",
+    "definition": "How well a team's shooters spread out the defense, creating driving lanes. Teams with good spacing score more efficiently.",
+    "example": "Trading for an elite shooter opens up the floor for your star to attack the basket."
+  },
+  {
+    "term": "Defensive Rating",
+    "definition": "Points allowed per 100 possessions. Lower is better. Elite defenses have ratings below 108.",
+    "example": "Adding a rim protector typically improves your defensive rating by 2-4 points."
+  },
+  {
+    "term": "Win Shares",
+    "definition": "An estimate of the number of wins contributed by a player. Stars typically have 10+ win shares per season.",
+    "example": "Giannis averages 12-15 win shares, meaning he's responsible for 12-15 of the Bucks' wins."
+  },
+  {
+    "term": "Load Management",
+    "definition": "Strategic resting of star players to prevent injuries and keep them fresh for playoffs. Controversial but effective.",
+    "example": "Load managing your stars costs regular season wins but may improve playoff performance."
+  },
+  {
+    "term": "Playoff Equity",
+    "definition": "A team's realistic chances of deep playoff success. Measured by roster talent, health, and playoff experience.",
+    "example": "Trading for playoff-tested veterans increases your playoff equity even if wins don't jump."
+  },
+  {
+    "term": "Asset Management",
+    "definition": "Strategic accumulation and use of draft picks, young players, and cap space to build championship teams.",
+    "example": "Trading veterans for picks is good asset management if you're rebuilding."
+  }
+]

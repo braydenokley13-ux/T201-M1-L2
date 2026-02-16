@@ -6,6 +6,7 @@ const UI = {
 
     init() {
         this.cacheElements();
+        this.updatePlayerStats();
     },
 
     cacheElements() {
@@ -68,7 +69,17 @@ const UI = {
             claimCodeSection: document.getElementById('claim-code-section'),
             claimCode: document.getElementById('claim-code'),
             noClaimCodeSection: document.getElementById('no-claim-code'),
-            confettiCanvas: document.getElementById('confetti-canvas')
+            confettiCanvas: document.getElementById('confetti-canvas'),
+            continueBtn: document.getElementById('continue-game-btn'),
+            statCompleted: document.getElementById('stat-completed'),
+            statStars: document.getElementById('stat-stars'),
+            statAchievements: document.getElementById('stat-achievements'),
+            achievementsSection: document.getElementById('achievements-section'),
+            achievementsGrid: document.getElementById('achievements-grid'),
+            analyticsSection: document.getElementById('analytics-section'),
+            breakdownItems: document.getElementById('breakdown-items'),
+            impactBars: document.getElementById('impact-bars'),
+            suggestionsList: document.getElementById('suggestions-list')
         };
     },
 
@@ -338,6 +349,17 @@ const UI = {
             this.elements.noClaimCodeSection.style.display = 'block';
         }
 
+        // Render achievements if any were unlocked
+        if (results.unlockedAchievements) {
+            this.renderAchievements(results.unlockedAchievements);
+        }
+
+        // Render analytics if failed
+        this.renderAnalytics(results, team);
+
+        // Update player stats
+        this.updatePlayerStats();
+
         if (results.success) {
             this.launchConfetti(team.colors);
         } else {
@@ -387,6 +409,210 @@ const UI = {
         const canvas = this.elements.confettiCanvas;
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+    },
+
+    // === V2.0 NEW METHODS ===
+
+    // Show/hide continue game button
+    showContinueOption(savedGame) {
+        if (!this.elements.continueBtn) return;
+
+        this.elements.continueBtn.style.display = 'flex';
+        this.elements.continueBtn.addEventListener('click', () => {
+            if (typeof GameEngine !== 'undefined' && GameEngine.loadSavedGame) {
+                GameEngine.loadSavedGame();
+            }
+        });
+    },
+
+    // Update player stats on team selection screen
+    updatePlayerStats() {
+        const stats = Storage.getDerivedStats();
+
+        if (this.elements.statCompleted) {
+            this.elements.statCompleted.textContent = stats.completedTeams;
+        }
+        if (this.elements.statStars) {
+            this.elements.statStars.textContent = stats.totalStars;
+        }
+        if (this.elements.statAchievements) {
+            const achievementCount = Storage.getAchievementCount();
+            this.elements.statAchievements.textContent = achievementCount;
+        }
+    },
+
+    // Render unlocked achievements
+    renderAchievements(unlockedAchievements) {
+        if (!this.elements.achievementsSection || !unlockedAchievements || unlockedAchievements.length === 0) {
+            if (this.elements.achievementsSection) {
+                this.elements.achievementsSection.style.display = 'none';
+            }
+            return;
+        }
+
+        this.elements.achievementsSection.style.display = 'block';
+        this.elements.achievementsGrid.innerHTML = '';
+
+        unlockedAchievements.forEach(achievement => {
+            const badge = document.createElement('div');
+            badge.className = `achievement-badge ${achievement.rarity}`;
+            badge.innerHTML = `
+                <div class="achievement-icon">${achievement.icon}</div>
+                <div class="achievement-name">${achievement.name}</div>
+                <div class="achievement-description">${achievement.description}</div>
+                <div class="achievement-rarity">${achievement.rarity.toUpperCase()}</div>
+            `;
+            this.elements.achievementsGrid.appendChild(badge);
+        });
+
+        // Animate badges in
+        setTimeout(() => {
+            const badges = this.elements.achievementsGrid.querySelectorAll('.achievement-badge');
+            badges.forEach((badge, index) => {
+                setTimeout(() => {
+                    badge.classList.add('animate-in');
+                }, index * 150);
+            });
+        }, 100);
+    },
+
+    // Render analytics breakdown (shown on failure)
+    renderAnalytics(results, team) {
+        if (!this.elements.analyticsSection) return;
+
+        // Only show analytics if failed
+        if (results.success) {
+            this.elements.analyticsSection.style.display = 'none';
+            return;
+        }
+
+        this.elements.analyticsSection.style.display = 'block';
+
+        // Breakdown of why targets were missed
+        this.elements.breakdownItems.innerHTML = '';
+
+        if (!results.hitWins) {
+            const item = document.createElement('div');
+            item.className = 'breakdown-item miss';
+            const diff = team.targets.wins - results.wins;
+            item.innerHTML = `
+                <span class="breakdown-icon">✕</span>
+                <span class="breakdown-text">Wins: Needed <strong>${team.targets.wins}</strong>, got <strong>${results.wins}</strong> (short by ${diff})</span>
+            `;
+            this.elements.breakdownItems.appendChild(item);
+        } else {
+            const item = document.createElement('div');
+            item.className = 'breakdown-item hit';
+            item.innerHTML = `
+                <span class="breakdown-icon">✓</span>
+                <span class="breakdown-text">Wins: Hit target (${results.wins}/${team.targets.wins})</span>
+            `;
+            this.elements.breakdownItems.appendChild(item);
+        }
+
+        if (!results.hitPerf) {
+            const item = document.createElement('div');
+            item.className = 'breakdown-item miss';
+            const diff = team.targets.perfPoints - results.perfPoints;
+            item.innerHTML = `
+                <span class="breakdown-icon">✕</span>
+                <span class="breakdown-text">Performance Points: Needed <strong>${team.targets.perfPoints}</strong>, got <strong>${results.perfPoints}</strong> (short by ${diff})</span>
+            `;
+            this.elements.breakdownItems.appendChild(item);
+        } else {
+            const item = document.createElement('div');
+            item.className = 'breakdown-item hit';
+            item.innerHTML = `
+                <span class="breakdown-icon">✓</span>
+                <span class="breakdown-text">Performance Points: Hit target (${results.perfPoints}/${team.targets.perfPoints})</span>
+            `;
+            this.elements.breakdownItems.appendChild(item);
+        }
+
+        if (!results.hitSpend) {
+            const item = document.createElement('div');
+            item.className = 'breakdown-item miss';
+            const overBy = results.payroll - team.targets.maxSpend;
+            item.innerHTML = `
+                <span class="breakdown-icon">✕</span>
+                <span class="breakdown-text">Budget: Max was <strong>${Calculator.formatCurrency(team.targets.maxSpend)}</strong>, spent <strong>${Calculator.formatCurrency(results.payroll)}</strong> (over by ${Calculator.formatCurrency(overBy)})</span>
+            `;
+            this.elements.breakdownItems.appendChild(item);
+        } else {
+            const item = document.createElement('div');
+            item.className = 'breakdown-item hit';
+            const under = team.targets.maxSpend - results.payroll;
+            item.innerHTML = `
+                <span class="breakdown-icon">✓</span>
+                <span class="breakdown-text">Budget: Under max by ${Calculator.formatCurrency(under)}</span>
+            `;
+            this.elements.breakdownItems.appendChild(item);
+        }
+
+        // Move impact visualization
+        this.elements.impactBars.innerHTML = '';
+        if (results.selectedMoves && results.selectedMoves.length > 0) {
+            results.selectedMoves.forEach(move => {
+                const bar = document.createElement('div');
+                bar.className = 'impact-bar';
+
+                const winsImpact = Math.abs(move.impact.wins) * 10; // Scale for visual
+                const payrollImpact = Math.abs(move.impact.payroll) / 2; // Scale down
+                const width = Math.min(100, Math.max(5, (winsImpact + payrollImpact)));
+
+                bar.innerHTML = `
+                    <div class="impact-label">${move.title}</div>
+                    <div class="impact-bar-fill" style="width: ${width}%"></div>
+                    <div class="impact-values">
+                        <span class="${move.impact.wins >= 0 ? 'positive' : 'negative'}">${move.impact.wins >= 0 ? '+' : ''}${move.impact.wins}W</span>
+                        <span class="${move.impact.payroll <= 0 ? 'positive' : 'negative'}">${move.impact.payroll >= 0 ? '+' : ''}${move.impact.payroll}M</span>
+                        <span class="${move.impact.perfPoints >= 0 ? 'positive' : 'negative'}">${move.impact.perfPoints >= 0 ? '+' : ''}${move.impact.perfPoints}PP</span>
+                    </div>
+                `;
+                this.elements.impactBars.appendChild(bar);
+            });
+        } else {
+            this.elements.impactBars.innerHTML = '<p class="no-moves-note">No moves selected - try adding moves to improve your team!</p>';
+        }
+
+        // Suggestions
+        this.elements.suggestionsList.innerHTML = '';
+
+        if (!results.hitWins) {
+            const suggestion = document.createElement('li');
+            suggestion.innerHTML = `Add moves that increase <strong>wins</strong> (look for trades or free agency signings with positive win impact)`;
+            this.elements.suggestionsList.appendChild(suggestion);
+        }
+
+        if (!results.hitPerf) {
+            const suggestion = document.createElement('li');
+            suggestion.innerHTML = `Boost <strong>performance points</strong> by improving playoff wins or overall team efficiency`;
+            this.elements.suggestionsList.appendChild(suggestion);
+        }
+
+        if (!results.hitSpend) {
+            const suggestion = document.createElement('li');
+            suggestion.innerHTML = `Reduce <strong>payroll</strong> with salary dumps or by avoiding expensive extensions`;
+            this.elements.suggestionsList.appendChild(suggestion);
+        }
+
+        if (results.tax > 50000000) {
+            const suggestion = document.createElement('li');
+            suggestion.innerHTML = `Your luxury tax is very high (${Calculator.formatCurrency(results.tax)}). Consider trading away expensive players to get below the apron.`;
+            this.elements.suggestionsList.appendChild(suggestion);
+        }
+
+        if (results.moveCount === 0) {
+            const suggestion = document.createElement('li');
+            suggestion.innerHTML = `You selected <strong>no moves</strong>. Try selecting 2-4 moves to improve your team's chances.`;
+            this.elements.suggestionsList.appendChild(suggestion);
+        }
+
+        if (this.elements.suggestionsList.children.length === 0) {
+            const suggestion = document.createElement('li');
+            suggestion.innerHTML = `You're very close! Try adjusting your move selection slightly.`;
+            this.elements.suggestionsList.appendChild(suggestion);
+        }
     }
 };
 

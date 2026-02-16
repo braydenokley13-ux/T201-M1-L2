@@ -1,0 +1,168 @@
+[
+  {
+    "id": "tax_dodger",
+    "name": "Tax Dodger",
+    "description": "Complete a scenario without paying luxury tax",
+    "icon": "💰",
+    "rarity": "common",
+    "condition": {
+      "type": "tax_free",
+      "threshold": 0
+    }
+  },
+  {
+    "id": "perfect_gm",
+    "name": "Perfect GM",
+    "description": "Get 5 stars on any scenario",
+    "icon": "💎",
+    "rarity": "rare",
+    "condition": {
+      "type": "stars",
+      "threshold": 5
+    }
+  },
+  {
+    "id": "sniper",
+    "name": "Sniper",
+    "description": "Win a scenario with exactly 0 moves selected",
+    "icon": "🎯",
+    "rarity": "epic",
+    "condition": {
+      "type": "move_count",
+      "value": 0,
+      "success": true
+    }
+  },
+  {
+    "id": "triple_crown",
+    "name": "Triple Crown",
+    "description": "Beat all 3 targets by at least 10 points each",
+    "icon": "🏆",
+    "rarity": "rare",
+    "condition": {
+      "type": "target_margin",
+      "threshold": 10
+    }
+  },
+  {
+    "id": "efficiency_expert",
+    "name": "Efficiency Expert",
+    "description": "Win with 95+ efficiency score",
+    "icon": "📊",
+    "rarity": "rare",
+    "condition": {
+      "type": "efficiency",
+      "threshold": 95
+    }
+  },
+  {
+    "id": "win_streak",
+    "name": "Win Streak",
+    "description": "Complete 3 scenarios in a row successfully",
+    "icon": "🔥",
+    "rarity": "epic",
+    "condition": {
+      "type": "streak",
+      "threshold": 3
+    }
+  },
+  {
+    "id": "big_brain",
+    "name": "Big Brain",
+    "description": "Win the Cavaliers scenario (hardest difficulty)",
+    "icon": "🧠",
+    "rarity": "epic",
+    "condition": {
+      "type": "team_completion",
+      "team": "cavaliers"
+    }
+  },
+  {
+    "id": "all_star_gm",
+    "name": "All-Star GM",
+    "description": "Complete all 5 team scenarios",
+    "icon": "🌟",
+    "rarity": "legendary",
+    "condition": {
+      "type": "all_teams",
+      "threshold": 5
+    }
+  },
+  {
+    "id": "bargain_hunter",
+    "name": "Bargain Hunter",
+    "description": "Win while staying $30M+ under budget",
+    "icon": "💸",
+    "rarity": "rare",
+    "condition": {
+      "type": "budget_margin",
+      "threshold": 30000000
+    }
+  },
+  {
+    "id": "speed_run",
+    "name": "Speed Run",
+    "description": "Complete scenario in under 2 minutes",
+    "icon": "⚡",
+    "rarity": "common",
+    "condition": {
+      "type": "time",
+      "threshold": 120000
+    }
+  },
+  {
+    "id": "first_win",
+    "name": "First Win",
+    "description": "Win your first scenario",
+    "icon": "🎉",
+    "rarity": "common",
+    "condition": {
+      "type": "first_completion"
+    }
+  },
+  {
+    "id": "maximalist",
+    "name": "Maximalist",
+    "description": "Win with all 5 move slots filled",
+    "icon": "🎰",
+    "rarity": "common",
+    "condition": {
+      "type": "move_count",
+      "value": 5,
+      "success": true
+    }
+  },
+  {
+    "id": "minimalist",
+    "name": "Minimalist",
+    "description": "Win with 2 or fewer moves",
+    "icon": "✨",
+    "rarity": "rare",
+    "condition": {
+      "type": "move_count_max",
+      "threshold": 2,
+      "success": true
+    }
+  },
+  {
+    "id": "comeback_kid",
+    "name": "Comeback Kid",
+    "description": "Win a scenario after failing it at least once",
+    "icon": "💪",
+    "rarity": "common",
+    "condition": {
+      "type": "retry_success"
+    }
+  },
+  {
+    "id": "champion_builder",
+    "name": "Champion Builder",
+    "description": "Win a scenario with 8+ playoff wins projected",
+    "icon": "🏅",
+    "rarity": "epic",
+    "condition": {
+      "type": "playoff_wins",
+      "threshold": 8
+    }
+  }
+]

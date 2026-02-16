@@ -1637,3 +1637,521 @@ body {
         text-align: center;
     }
 }
+
+/* ============================================
+   V2.0 NEW FEATURES
+   ============================================ */
+
+/* Continue Game Button */
+.continue-btn {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 16px 32px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.continue-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.continue-icon {
+    font-size: 1.3rem;
+}
+
+/* Player Stats on Team Selection */
+.player-stats {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.stat-icon {
+    font-size: 2rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Achievements Section */
+.achievements-section {
+    margin: 32px 0;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
+    border: 2px solid var(--primary-color);
+}
+
+.achievements-header h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.achievement-badge {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.achievement-badge.animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.achievement-badge.common {
+    border-color: #64748b;
+}
+
+.achievement-badge.rare {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+}
+
+.achievement-badge.epic {
+    border-color: #a855f7;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(168, 85, 247, 0.05));
+}
+
+.achievement-badge.legendary {
+    border-color: #fbbf24;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05));
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+.achievement-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.achievement-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.achievement-description {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 8px;
+}
+
+.achievement-rarity {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    opacity: 0.5;
+}
+
+/* Analytics Section */
+.analytics-section {
+    margin: 32px 0;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
+    border: 2px solid #ef4444;
+}
+
+.analytics-header h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #ef4444;
+}
+
+.analytics-breakdown,
+.move-impact-viz,
+.suggestions {
+    margin-bottom: 24px;
+}
+
+.breakdown-title,
+.viz-title,
+.suggestions-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.breakdown-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.breakdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+.breakdown-item.hit {
+    border-left-color: #10b981;
+}
+
+.breakdown-item.miss {
+    border-left-color: #ef4444;
+}
+
+.breakdown-icon {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.breakdown-item.hit .breakdown-icon {
+    color: #10b981;
+}
+
+.breakdown-item.miss .breakdown-icon {
+    color: #ef4444;
+}
+
+.breakdown-text {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.impact-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.impact-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.impact-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.impact-bar-fill {
+    height: 8px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.impact-values {
+    display: flex;
+    gap: 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.impact-values .positive {
+    color: #10b981;
+}
+
+.impact-values .negative {
+    color: #ef4444;
+}
+
+.suggestions-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.suggestions-list li {
+    padding: 12px 16px;
+    background: rgba(59, 130, 246, 0.1);
+    border-left: 4px solid #3b82f6;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.suggestions-list li::before {
+    content: "💡 ";
+    margin-right: 8px;
+}
+
+.no-moves-note {
+    text-align: center;
+    padding: 20px;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+}
+
+/* Tutorial Overlay */
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9998;
+    backdrop-filter: blur(4px);
+}
+
+.tutorial-tooltip {
+    position: fixed;
+    z-index: 9999;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 2px solid var(--primary-color);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 500px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+}
+
+.tutorial-tooltip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.tutorial-tooltip-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+}
+
+.tutorial-tooltip-close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.tutorial-tooltip-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.tutorial-tooltip-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 20px;
+}
+
+.tutorial-tooltip-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.tutorial-btn-skip {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tutorial-btn-skip:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.tutorial-tooltip-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tutorial-progress {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+}
+
+.tutorial-btn-prev,
+.tutorial-btn-next {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.tutorial-btn-prev {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.tutorial-btn-prev:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.tutorial-btn-prev:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.tutorial-btn-next {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.tutorial-btn-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.tutorial-highlight {
+    position: relative;
+    z-index: 9997;
+    box-shadow: 0 0 0 4px var(--primary-color), 0 0 20px rgba(59, 130, 246, 0.6);
+    animation: pulse-highlight 2s ease-in-out infinite;
+}
+
+@keyframes pulse-highlight {
+    0%, 100% {
+        box-shadow: 0 0 0 4px var(--primary-color), 0 0 20px rgba(59, 130, 246, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 0 6px var(--primary-color), 0 0 30px rgba(59, 130, 246, 0.8);
+    }
+}
+
+/* Glossary Tooltip */
+.glossary-tooltip {
+    position: fixed;
+    z-index: 10000;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 16px 20px;
+    max-width: 400px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+}
+
+.glossary-tooltip h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: var(--primary-color);
+}
+
+.glossary-tooltip p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 8px 0;
+}
+
+.glossary-tooltip .example {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+    border-left: 3px solid var(--primary-color);
+    padding-left: 12px;
+    margin-top: 12px;
+}
+
+/* Responsive Adjustments for V2.0 */
+@media (max-width: 768px) {
+    .player-stats {
+        gap: 20px;
+    }
+
+    .stat-icon {
+        font-size: 1.5rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .achievements-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tutorial-tooltip {
+        max-width: 90vw;
+        padding: 16px;
+    }
+
+    .tutorial-tooltip-title {
+        font-size: 1.2rem;
+    }
+
+    .tutorial-tooltip-footer {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .tutorial-tooltip-nav {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
