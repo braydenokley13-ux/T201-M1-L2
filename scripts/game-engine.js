@@ -384,7 +384,7 @@ const GameEngine = {
                     const team = this.state.currentTeam;
                     const winsMargin = results.wins - team.targets.wins;
                     const perfMargin = results.perfPoints - team.targets.perfPoints;
-                    const budgetMargin = results.budgetMargin / 1000000; // Convert to millions
+                    const budgetMargin = results.budgetMargin; // Already in millions
                     shouldUnlock = results.success && winsMargin >= condition.threshold &&
                                    perfMargin >= condition.threshold && budgetMargin >= condition.threshold;
                     break;
