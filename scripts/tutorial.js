@@ -102,6 +102,7 @@ const Tutorial = {
     overlay: null,
     tooltip: null,
     glossary: [],
+    screenObserver: null,
 
     async init() {
         // Load glossary
@@ -182,6 +183,10 @@ const Tutorial = {
         this.overlay.style.display = 'none';
         this.tooltip.style.display = 'none';
         this.clearHighlights();
+        if (this.screenObserver) {
+            this.screenObserver.disconnect();
+            this.screenObserver = null;
+        }
     },
 
     skip() {
@@ -235,10 +240,14 @@ const Tutorial = {
                     this.highlightElements(step.highlight);
                 }
             } else if (step.waitForScreen) {
-                // Element not visible yet, wait for screen change
+                // Element not visible yet — hide overlay so user can navigate freely
                 this.tooltip.style.display = 'none';
+                this.overlay.style.display = 'none';
                 this.waitForScreen(step.waitForScreen, () => {
-                    this.showStep(stepIndex);
+                    if (this.active) {
+                        this.overlay.style.display = 'block';
+                        this.showStep(stepIndex);
+                    }
                 });
                 return;
             }
@@ -299,16 +308,22 @@ const Tutorial = {
     },
 
     waitForScreen(screenId, callback) {
+        // Disconnect any previously running observer
+        if (this.screenObserver) {
+            this.screenObserver.disconnect();
+        }
+
         // Set up observer to wait for screen to become visible
-        const observer = new MutationObserver(() => {
+        this.screenObserver = new MutationObserver(() => {
             const screen = document.getElementById(screenId);
             if (screen && screen.classList.contains('active')) {
-                observer.disconnect();
+                this.screenObserver.disconnect();
+                this.screenObserver = null;
                 setTimeout(callback, 300); // Wait for transition
             }
         });
 
-        observer.observe(document.body, {
+        this.screenObserver.observe(document.body, {
             attributes: true,
             subtree: true,
             attributeFilter: ['class']
