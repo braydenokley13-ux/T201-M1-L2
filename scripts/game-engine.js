@@ -291,20 +291,28 @@ const GameEngine = {
         const success = hitCount === 3;
         const playoffResult = this.formatPlayoffResult(summary.playoffWins);
 
-        const efficiencyScore = Math.max(
-            0,
-            Math.min(
-                100,
-                Math.round(
-                    50 + hitCount * 15 + Math.max(0, team.targets.maxSpend - summary.payroll) * 0.2 + Math.max(0, summary.wins - team.targets.wins) * 0.5
-                )
-            )
-        );
+        // Efficiency score: 0-100 scale that meaningfully reflects performance.
+        // Base 20 + 20 per target hit (max 80). Partial credit for near-misses.
+        // Bonuses for exceeding win target, playoff success, and budget efficiency.
+        const baseScore = 20 + hitCount * 20;
+        const winsMissPartial  = !hitWins  ? Math.round(9 * Math.min(1, summary.wins / team.targets.wins)) : 0;
+        const perfMissPartial  = !hitPerf  ? Math.round(9 * Math.min(1, summary.perfPoints / team.targets.perfPoints)) : 0;
+        const budgetMissPartial = !hitSpend ? Math.round(9 * Math.min(1, team.targets.maxSpend / summary.payroll)) : 0;
+        const winsBonus   = hitWins  ? Math.min(5, summary.wins - team.targets.wins) : 0;
+        const playoffBonus = Math.min(5, summary.playoffWins);
+        const budgetBonus  = hitSpend ? Math.min(7, Math.floor((team.targets.maxSpend - summary.payroll) / 10)) : 0;
+        const efficiencyScore = Math.min(100, baseScore + winsMissPartial + perfMissPartial + budgetMissPartial + winsBonus + playoffBonus + budgetBonus);
 
-        const stars = Math.min(
-            5,
-            hitCount + (summary.playoffWins >= 4 ? 1 : 0) + (summary.payroll <= team.targets.maxSpend - 10 ? 1 : 0)
-        );
+        // Stars: failures earn 0-2 stars only; success earns 3-5 based on bonuses.
+        let stars;
+        if (!success) {
+            stars = hitCount; // 0, 1, or 2 stars
+        } else {
+            stars = 3;
+            if (summary.playoffWins >= 4) stars++;
+            if (summary.payroll <= team.targets.maxSpend - 10) stars++;
+            stars = Math.min(5, stars);
+        }
 
         const results = {
             wins: summary.wins,
@@ -380,7 +388,7 @@ const GameEngine = {
                     shouldUnlock = results.moveCount <= condition.threshold && results.success;
                     break;
 
-                case 'target_margin':
+                case 'target_margin': {
                     const team = this.state.currentTeam;
                     const winsMargin = results.wins - team.targets.wins;
                     const perfMargin = results.perfPoints - team.targets.perfPoints;
@@ -388,6 +396,7 @@ const GameEngine = {
                     shouldUnlock = results.success && winsMargin >= condition.threshold &&
                                    perfMargin >= condition.threshold && budgetMargin >= condition.threshold;
                     break;
+                }
 
                 case 'efficiency':
                     shouldUnlock = results.success && results.efficiencyScore >= condition.threshold;
@@ -401,11 +410,12 @@ const GameEngine = {
                     shouldUnlock = results.success && this.state.currentTeam.id === condition.team;
                     break;
 
-                case 'all_teams':
+                case 'all_teams': {
                     const completedTeams = Object.values(Storage.getAllTeamStats())
                         .filter(t => t.completed).length;
                     shouldUnlock = completedTeams >= condition.threshold;
                     break;
+                }
 
                 case 'budget_margin':
                     shouldUnlock = results.success && results.budgetMargin >= condition.threshold;
@@ -415,10 +425,11 @@ const GameEngine = {
                     shouldUnlock = results.success && results.timeTaken <= condition.threshold;
                     break;
 
-                case 'retry_success':
+                case 'retry_success': {
                     const teamStats = Storage.getTeamStats(this.state.currentTeam.id);
                     shouldUnlock = results.success && teamStats.attempts > 1;
                     break;
+                }
 
                 case 'playoff_wins':
                     shouldUnlock = results.success && results.playoffWins >= condition.threshold;
