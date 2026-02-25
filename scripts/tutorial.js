@@ -14,7 +14,7 @@ const Tutorial = {
             id: 'select-team',
             title: 'Choose Your Team',
             content: 'Each team has a unique crisis scenario. Start with an EASY team like the Spurs to learn the basics.',
-            target: '.team-selection-screen',
+            target: '#team-selection-screen',
             position: 'center',
             highlight: '.team-card'
         },
@@ -22,7 +22,7 @@ const Tutorial = {
             id: 'scenario-intro',
             title: 'Understand the Scenario',
             content: 'Every scenario shows the team\'s current situation, roster, and ownership demands. Read carefully to know what you\'re up against.',
-            target: '.team-intro-screen',
+            target: '#team-intro-screen',
             position: 'center',
             waitForScreen: 'team-intro-screen'
         },
@@ -30,9 +30,9 @@ const Tutorial = {
             id: 'targets',
             title: 'Your Targets',
             content: 'You must hit ALL THREE targets to earn your claim code: Wins, Performance Points, and stay under the Max Spend budget.',
-            target: '.targets-grid',
+            target: '#intro-targets-grid',
             position: 'bottom',
-            highlight: '.target-item',
+            highlight: '.intro-target-item',
             waitForScreen: 'team-intro-screen'
         },
         {
@@ -48,7 +48,7 @@ const Tutorial = {
             id: 'move-categories',
             title: 'Move Categories',
             content: 'Moves are organized into 6 categories: Trades, Free Agency, Extensions, Development, Savings, and Status Quo. Each affects your roster differently.',
-            target: '.category-tabs',
+            target: '.move-tabs',
             position: 'bottom',
             highlight: '.tab-btn',
             waitForScreen: 'game-screen'
@@ -66,16 +66,16 @@ const Tutorial = {
             id: 'live-stats',
             title: 'Live Dashboard',
             content: 'Watch these stats update in real-time as you select moves. Green means you\'re hitting the target, red means you\'re missing it.',
-            target: '.ownership-demands',
+            target: '.stats-grid',
             position: 'right',
-            highlight: '.demand-item',
+            highlight: '.stat-card',
             waitForScreen: 'game-screen'
         },
         {
             id: 'luxury-tax',
             title: 'Luxury Tax Explained',
             content: 'The Luxury Tax is a penalty for teams spending over $171M. It\'s calculated on progressive brackets and adds to your total spend. Hover over terms for definitions.',
-            target: '.ownership-demands',
+            target: '.stats-grid',
             position: 'right',
             waitForScreen: 'game-screen'
         },

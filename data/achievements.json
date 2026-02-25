@@ -96,7 +96,7 @@
     "rarity": "rare",
     "condition": {
       "type": "budget_margin",
-      "threshold": 30000000
+      "threshold": 30
     }
   },
   {
