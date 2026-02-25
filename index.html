@@ -26,11 +26,34 @@
                 <span class="title-line gradient-text">CRISIS MANAGER</span>
             </h1>
             <p class="hero-subtitle">Step into the front office. Make the tough calls.</p>
+
+            <!-- Continue Game Button -->
+            <button id="continue-game-btn" class="continue-btn" style="display: none;">
+                <span class="continue-icon">▶</span>
+                <span class="continue-text">Continue Game</span>
+            </button>
         </div>
 
         <div class="team-selection-container">
             <div class="section-header">
                 <h2>Choose Your Challenge</h2>
+                <div class="player-stats" id="player-stats">
+                    <div class="stat-item">
+                        <span class="stat-icon">🎯</span>
+                        <span class="stat-value" id="stat-completed">0</span>
+                        <span class="stat-label">Completed</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">⭐</span>
+                        <span class="stat-value" id="stat-stars">0</span>
+                        <span class="stat-label">Total Stars</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">🏆</span>
+                        <span class="stat-value" id="stat-achievements">0</span>
+                        <span class="stat-label">Achievements</span>
+                    </div>
+                </div>
             </div>
 
             <div class="team-grid">
@@ -442,6 +465,44 @@
                 <div class="no-claim-note">Try again to unlock the claim code!</div>
             </div>
 
+            <!-- Achievements Section -->
+            <div class="achievements-section" id="achievements-section" style="display: none;">
+                <div class="achievements-header">
+                    <h3>🏆 Achievements Unlocked!</h3>
+                </div>
+                <div class="achievements-grid" id="achievements-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Analytics Section (shown on failure) -->
+            <div class="analytics-section" id="analytics-section" style="display: none;">
+                <div class="analytics-header">
+                    <h3>📊 Performance Analysis</h3>
+                </div>
+
+                <div class="analytics-breakdown">
+                    <div class="breakdown-title">Why You Missed the Targets:</div>
+                    <div class="breakdown-items" id="breakdown-items">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="move-impact-viz">
+                    <div class="viz-title">Move Impact Breakdown:</div>
+                    <div class="impact-bars" id="impact-bars">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="suggestions">
+                    <div class="suggestions-title">💡 Suggestions:</div>
+                    <ul class="suggestions-list" id="suggestions-list">
+                        <!-- Populated by JavaScript -->
+                    </ul>
+                </div>
+            </div>
+
             <div class="results-buttons">
                 <button class="result-btn" id="try-again-btn">Try Again</button>
                 <button class="result-btn" id="new-team-btn">New Team</button>
@@ -454,10 +515,12 @@
     <canvas id="confetti-canvas"></canvas>
 
     <!-- Scripts -->
+    <script src="scripts/storage.js"></script>
     <script src="scripts/teams.js"></script>
     <script src="scripts/moves.js"></script>
     <script src="scripts/calculator.js"></script>
     <script src="scripts/ui.js"></script>
+    <script src="scripts/tutorial.js"></script>
     <script src="scripts/game-engine.js"></script>
 </body>
 </html>

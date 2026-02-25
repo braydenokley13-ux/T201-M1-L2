@@ -5,14 +5,57 @@ const GameEngine = {
     state: {
         currentTeam: null,
         activeCategory: 'trades',
-        selectedMoves: []
+        selectedMoves: [],
+        gameStartTime: null,
+        achievements: [], // Loaded from achievements.json
+        currentStreak: 0
     },
 
     init() {
         UI.init();
+        this.loadAchievements();
         this.bindEvents();
         this.resetState();
+        this.checkForSavedGame();
         UI.showScreen('team-selection-screen');
+    },
+
+    // Load achievement definitions from JSON
+    async loadAchievements() {
+        try {
+            const response = await fetch('data/achievements.json');
+            this.state.achievements = await response.json();
+        } catch (e) {
+            console.error('Failed to load achievements:', e);
+            this.state.achievements = [];
+        }
+    },
+
+    // Check if there's a saved game and offer to continue
+    checkForSavedGame() {
+        if (Storage.hasSavedGame()) {
+            const savedGame = Storage.getCurrentGame();
+            // Show continue button or modal (UI will handle this)
+            if (UI.showContinueOption) {
+                UI.showContinueOption(savedGame);
+            }
+        }
+    },
+
+    // Load saved game
+    loadSavedGame() {
+        const savedGame = Storage.getCurrentGame();
+        if (savedGame && savedGame.teamId) {
+            // Reconstruct selected moves from IDs
+            const moves = savedGame.selectedMoves.map(savedMove =>
+                MOVES.find(m => m.id === savedMove.id)
+            ).filter(Boolean);
+
+            this.selectTeam(savedGame.teamId, { showIntro: false });
+            this.state.selectedMoves = moves;
+            this.renderCurrentState();
+            UI.showScreen('game-screen');
+        }
     },
 
     bindEvents() {
@@ -146,6 +189,7 @@ const GameEngine = {
         this.state.currentTeam = TEAMS[teamId];
         this.state.selectedMoves = [];
         this.state.activeCategory = 'trades';
+        this.state.gameStartTime = Date.now(); // Track start time for speed run achievement
         document.querySelectorAll('.tab-btn').forEach((btn) => {
             btn.classList.toggle('active', btn.dataset.category === 'trades');
         });
@@ -190,11 +234,22 @@ const GameEngine = {
             }
         }
         this.renderCurrentState();
+        // Auto-save current game state
+        this.saveCurrentGame();
     },
 
     removeMove(moveId) {
         this.state.selectedMoves = this.state.selectedMoves.filter((move) => move.id !== moveId);
         this.renderCurrentState();
+        // Auto-save current game state
+        this.saveCurrentGame();
+    },
+
+    // Save current game state to localStorage
+    saveCurrentGame() {
+        if (this.state.currentTeam) {
+            Storage.saveCurrentGame(this.state.currentTeam.id, this.state.selectedMoves);
+        }
     },
 
     calculateSummary() {
@@ -251,11 +306,12 @@ const GameEngine = {
             hitCount + (summary.playoffWins >= 4 ? 1 : 0) + (summary.payroll <= team.targets.maxSpend - 10 ? 1 : 0)
         );
 
-        return {
+        const results = {
             wins: summary.wins,
             payroll: summary.payroll,
             perfPoints: summary.perfPoints,
             playoffResult,
+            playoffWins: summary.playoffWins,
             tax: summary.tax,
             hitWins,
             hitPerf,
@@ -264,8 +320,120 @@ const GameEngine = {
             success,
             efficiencyScore,
             stars,
-            selectedMoves: this.state.selectedMoves
+            selectedMoves: this.state.selectedMoves,
+            timeTaken: Date.now() - this.state.gameStartTime,
+            budgetMargin: team.targets.maxSpend - summary.payroll,
+            moveCount: this.state.selectedMoves.length
         };
+
+        // Update storage
+        Storage.updateTeamStats(team.id, results);
+
+        // Detect and unlock achievements
+        const unlockedAchievements = this.detectAchievements(results);
+        results.unlockedAchievements = unlockedAchievements;
+
+        // Clear saved game since scenario is complete
+        Storage.clearCurrentGame();
+
+        // Update streak
+        if (success) {
+            this.state.currentStreak += 1;
+        } else {
+            this.state.currentStreak = 0;
+        }
+
+        return results;
+    },
+
+    // Detect which achievements were earned this game
+    detectAchievements(results) {
+        const unlockedAchievements = [];
+
+        this.state.achievements.forEach(achievement => {
+            // Skip if already unlocked
+            if (Storage.hasAchievement(achievement.id)) {
+                return;
+            }
+
+            let shouldUnlock = false;
+            const condition = achievement.condition;
+
+            switch (condition.type) {
+                case 'first_completion':
+                    shouldUnlock = results.success && Storage.getStats().totalGamesWon === 1;
+                    break;
+
+                case 'stars':
+                    shouldUnlock = results.stars >= condition.threshold;
+                    break;
+
+                case 'tax_free':
+                    shouldUnlock = results.success && results.tax === 0;
+                    break;
+
+                case 'move_count':
+                    shouldUnlock = results.moveCount === condition.value && results.success === condition.success;
+                    break;
+
+                case 'move_count_max':
+                    shouldUnlock = results.moveCount <= condition.threshold && results.success;
+                    break;
+
+                case 'target_margin':
+                    const team = this.state.currentTeam;
+                    const winsMargin = results.wins - team.targets.wins;
+                    const perfMargin = results.perfPoints - team.targets.perfPoints;
+                    const budgetMargin = results.budgetMargin / 1000000; // Convert to millions
+                    shouldUnlock = results.success && winsMargin >= condition.threshold &&
+                                   perfMargin >= condition.threshold && budgetMargin >= condition.threshold;
+                    break;
+
+                case 'efficiency':
+                    shouldUnlock = results.success && results.efficiencyScore >= condition.threshold;
+                    break;
+
+                case 'streak':
+                    shouldUnlock = this.state.currentStreak >= condition.threshold;
+                    break;
+
+                case 'team_completion':
+                    shouldUnlock = results.success && this.state.currentTeam.id === condition.team;
+                    break;
+
+                case 'all_teams':
+                    const completedTeams = Object.values(Storage.getAllTeamStats())
+                        .filter(t => t.completed).length;
+                    shouldUnlock = completedTeams >= condition.threshold;
+                    break;
+
+                case 'budget_margin':
+                    shouldUnlock = results.success && results.budgetMargin >= condition.threshold;
+                    break;
+
+                case 'time':
+                    shouldUnlock = results.success && results.timeTaken <= condition.threshold;
+                    break;
+
+                case 'retry_success':
+                    const teamStats = Storage.getTeamStats(this.state.currentTeam.id);
+                    shouldUnlock = results.success && teamStats.attempts > 1;
+                    break;
+
+                case 'playoff_wins':
+                    shouldUnlock = results.success && results.playoffWins >= condition.threshold;
+                    break;
+            }
+
+            if (shouldUnlock) {
+                const wasNew = Storage.unlockAchievement(achievement.id);
+                if (wasNew) {
+                    unlockedAchievements.push(achievement);
+                }
+            }
+        });
+
+        return unlockedAchievements;
     },
 
     formatPlayoffResult(playoffWins) {
