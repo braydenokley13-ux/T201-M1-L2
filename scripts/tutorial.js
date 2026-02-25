@@ -136,12 +136,6 @@ const Tutorial = {
         this.overlay.className = 'tutorial-overlay';
         this.overlay.style.display = 'none';
         document.body.appendChild(this.overlay);
-
-        this.overlay.addEventListener('click', (e) => {
-            if (e.target === this.overlay) {
-                this.skip();
-            }
-        });
     },
 
     createTooltip() {

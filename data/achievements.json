@@ -24,12 +24,12 @@
   {
     "id": "sniper",
     "name": "Sniper",
-    "description": "Win a scenario with exactly 0 moves selected",
+    "description": "Win a scenario with exactly 1 move",
     "icon": "🎯",
     "rarity": "epic",
     "condition": {
       "type": "move_count",
-      "value": 0,
+      "value": 1,
       "success": true
     }
   },

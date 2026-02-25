@@ -1947,6 +1947,7 @@ body {
     background: rgba(0, 0, 0, 0.85);
     z-index: 9998;
     backdrop-filter: blur(4px);
+    pointer-events: none; /* Allow clicks to pass through to highlighted elements */
 }
 
 .tutorial-tooltip {
